@@ -19,8 +19,8 @@ public class Pessoa {
     private String emailPessoa;
     private boolean ativoPessoa;
 
-    public Pessoa(int idPessoa, String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
-        this.idPessoa = idPessoa;
+    public Pessoa( String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
+        
         this.cpfcnpj = cpfcnpj;
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
