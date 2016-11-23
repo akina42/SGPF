@@ -5,20 +5,16 @@
  */
 package Model;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author leo
  */
-public class Fornecedor extends Pessoa{
-    
-    private ArrayList<Projeto> listaProjetosCliente;
-    
-    public Fornecedor(int idPessoa, String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
+public class Cliente extends Pessoa{
+   
+    public Cliente(int idPessoa, String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
         super(idPessoa, cpfcnpj, nomeFantasia, razaoSocial, enderecoPessoa, telefonePessoa, emailPessoa, ativoPessoa);
     }
+   
     
- 
-    
+   
 }
