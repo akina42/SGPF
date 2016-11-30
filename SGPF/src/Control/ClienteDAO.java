@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Control;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import Model.Cliente;
 
 /**
  *
  * @author leo
  */
-
-public enum Estado {
-    OPERACIONAL,
-    EMMANUTENCAO,
-    INATIVO
+public class ClienteDAO {
+    
+    public void verificaCampos(Cliente cliente){
+        
+    }
+    
 }

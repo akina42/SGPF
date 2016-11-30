@@ -5,16 +5,44 @@
  */
 package Model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author leo
  */
-public class Maquina {
+
+@Entity
+@Table(name = "MAQUINA")
+public class Maquina implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idMaquina;
+
+    @Column(length = 100, name = "NOME", nullable = false)
     private String nomeMaquina;
+    
+    @Column(length = 12, name = "CUSTOHORA", nullable = false)
     private Double custoHora;
+    
+    @Column(length = 1, name = "ESTADO", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Estado estadoMaquina;
 
+    public Maquina(String nomeMaquina, Double custoHora, Estado estadoMaquina) {
+    this.nomeMaquina = nomeMaquina;
+    this.custoHora = custoHora;
+    this.estadoMaquina = estadoMaquina;
+    }
     public int getIdMaquina() {
         return idMaquina;
     }
