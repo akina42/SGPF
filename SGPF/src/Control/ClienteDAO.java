@@ -6,6 +6,8 @@
 package Control;
 
 import Model.Cliente;
+import javax.persistence.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,7 +15,22 @@ import Model.Cliente;
  */
 public class ClienteDAO {
     
-    public void verificaCampos(Cliente cliente){
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("SGPFPU");
+    EntityManager em = emf.createEntityManager();
+    
+    public void salvarCliente(Cliente cliente){
+        
+        try{
+            em.getTransaction().begin();
+            em.persist(cliente);
+            em.getTransaction().commit();            
+            em.close();
+            emf.close();
+        }catch(Exception e){
+           JOptionPane.showMessageDialog(null, ("Erro ao salvar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+            
+            
+        }
         
     }
     

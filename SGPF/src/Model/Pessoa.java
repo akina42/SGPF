@@ -24,6 +24,7 @@ public class Pessoa {
     @TableGenerator(name = "PESSOA_GEN", table = "ID_GEN", pkColumnName = "GEN_NAME")
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE, generator = "PESSOA_GEN")
+    @Column(length = 10, name = "ID", nullable = false)    
     private int idPessoa;
     
     @Column(length = 14, name = "CPFCNPJ", nullable = false)
@@ -38,7 +39,7 @@ public class Pessoa {
     @Column(length = 150, name = "ENDERECO", nullable = false)
     private String enderecoPessoa;
     
-    @Column(length = 11, name = "TELEFONE")
+    @Column(length = 20, name = "TELEFONE")
     private String telefonePessoa;
     
     @Column(length = 50, name = "EMAIL")
@@ -47,6 +48,7 @@ public class Pessoa {
     @Column(length = 1, name = "STATUSPESSOA")
     private boolean ativoPessoa;
 
+    /*
     public Pessoa( String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
         
         this.cpfcnpj = cpfcnpj;
@@ -56,7 +58,7 @@ public class Pessoa {
         this.telefonePessoa = telefonePessoa;
         this.emailPessoa = emailPessoa;
         this.ativoPessoa = ativoPessoa;
-    }
+    }*/
 
     
     /*

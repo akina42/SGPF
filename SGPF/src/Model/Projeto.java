@@ -5,10 +5,20 @@
  */
 package Model;
 
+import java.io.Serializable;
+import javax.persistence.*;
+
 /**
  *
  * @author Akina
  */
-public class Projeto {
+@Entity
+@Table(name="PROJETO")
+
+public class Projeto implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(length = 10, name = "ID", nullable = false)
+    private int idProjeto;
 }

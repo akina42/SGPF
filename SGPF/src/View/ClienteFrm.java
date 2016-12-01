@@ -5,17 +5,53 @@
  */
 package View;
 
+import Control.ClienteDAO;
+import Model.Cliente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author leo
  */
 public class ClienteFrm extends javax.swing.JFrame {
 
+    ClienteDAO clienteDAO = new ClienteDAO();
     /**
      * Creates new form ClienteFrm
      */
     public ClienteFrm() {
         initComponents();
+    }
+    
+    public void tableRefresh(){
+        try{
+            this.listaClienteTbl.repaint();
+        }catch(Exception e){
+            
+        }
+    }
+    
+    public void fieldRefresh(){
+        this.idClienteTxt.setText("");
+        this.nomeClienteTxt.setText("");
+        this.cpfcnpjClienteTxt.setText("");
+        this.razaosocialClienteTxt.setText("");
+        this.telefoneClienteTxt.setText("");
+        this.enderecoClienteTxt.setText("");
+        this.emailClienteTxt.setText("");
+    }
+    
+    public boolean checaVazio(){
+        if(
+        this.nomeClienteTxt.getText().equals("") ||
+        this.cpfcnpjClienteTxt.getText().equals("") ||
+        this.razaosocialClienteTxt.getText().equals("") ||
+        this.telefoneClienteTxt.getText().equals("") ||
+        this.enderecoClienteTxt.getText().equals("") ||
+        this.emailClienteTxt.getText().equals("")){
+        return true;
+    }
+        return false;
     }
 
     /**
@@ -33,6 +69,8 @@ public class ClienteFrm extends javax.swing.JFrame {
         SGPFPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("SGPFPU").createEntityManager();
         clienteQuery = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
         clienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery.getResultList();
+        clienteQuery1 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery1.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nomeClienteLbl = new javax.swing.JLabel();
@@ -54,8 +92,9 @@ public class ClienteFrm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaClienteTbl = new javax.swing.JTable();
         titulotabelaClienteLbl = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        salvarClienteBtn = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        limparClienteBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -100,6 +139,18 @@ public class ClienteFrm extends javax.swing.JFrame {
 
         cpfcnpjClienteLbl.setText("CPF/CNPJ");
 
+        try {
+            cpfcnpjClienteTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##############")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            telefoneClienteTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         idClienteTxt.setEnabled(false);
         idClienteTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,12 +174,24 @@ public class ClienteFrm extends javax.swing.JFrame {
 
         titulotabelaClienteLbl.setText("Lista de Clientes");
 
-        jButton3.setText("Salvar");
+        salvarClienteBtn.setText("Salvar");
+        salvarClienteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarClienteBtnActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Excluir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        limparClienteBtn.setText("Limpar");
+        limparClienteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparClienteBtnActionPerformed(evt);
             }
         });
 
@@ -185,11 +248,13 @@ public class ClienteFrm extends javax.swing.JFrame {
                         .addGap(356, 356, 356)
                         .addComponent(titulotabelaClienteLbl))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(325, 325, 325)
-                        .addComponent(jButton3)
+                        .addGap(292, 292, 292)
+                        .addComponent(salvarClienteBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(limparClienteBtn)))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +290,8 @@ public class ClienteFrm extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(salvarClienteBtn)
+                    .addComponent(limparClienteBtn))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -256,6 +322,36 @@ public class ClienteFrm extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void limparClienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparClienteBtnActionPerformed
+        // TODO add your handling code here:
+        fieldRefresh();
+    }//GEN-LAST:event_limparClienteBtnActionPerformed
+
+    private void salvarClienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarClienteBtnActionPerformed
+        // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else{
+        try{
+            Cliente cliente = new Cliente();
+            
+            cliente.setCpfcnpj(this.cpfcnpjClienteTxt.getText());
+            cliente.setNomeFantasia(this.nomeClienteTxt.getText());
+            cliente.setRazaoSocial(this.razaosocialClienteTxt.getText());
+            cliente.setEnderecoPessoa(this.enderecoClienteTxt.getText());
+            cliente.setTelefonePessoa( this.telefoneClienteTxt.getText());                               
+            cliente.setEmailPessoa( this.emailClienteTxt.getText());                               
+            cliente.setAtivoPessoa(true);
+            
+            clienteDAO.salvarCliente(cliente);
+            
+            this.fieldRefresh();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }}
+    }//GEN-LAST:event_salvarClienteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,7 +393,9 @@ public class ClienteFrm extends javax.swing.JFrame {
     private javax.swing.JCheckBox ativoClienteCbx;
     private javax.swing.JLabel ativoClienteLbl;
     private java.util.List<Model.Cliente> clienteList;
+    private java.util.List<Model.Cliente> clienteList1;
     private javax.persistence.Query clienteQuery;
+    private javax.persistence.Query clienteQuery1;
     private javax.swing.JLabel cpfcnpjClienteLbl;
     private javax.swing.JFormattedTextField cpfcnpjClienteTxt;
     private javax.swing.JLabel emailClienteLbl;
@@ -305,7 +403,6 @@ public class ClienteFrm extends javax.swing.JFrame {
     private javax.swing.JLabel enderecoClienteLbl;
     private javax.swing.JTextField enderecoClienteTxt;
     private javax.swing.JTextField idClienteTxt;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
@@ -314,11 +411,13 @@ public class ClienteFrm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton limparClienteBtn;
     private javax.swing.JTable listaClienteTbl;
     private javax.swing.JLabel nomeClienteLbl;
     private javax.swing.JTextField nomeClienteTxt;
     private javax.swing.JLabel razaoSocialClienteLbl;
     private javax.swing.JTextField razaosocialClienteTxt;
+    private javax.swing.JButton salvarClienteBtn;
     private javax.swing.JLabel telefoneClienteLbl;
     private javax.swing.JFormattedTextField telefoneClienteTxt;
     private javax.swing.JLabel titulotabelaClienteLbl;

@@ -26,6 +26,7 @@ public class Maquina implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(length = 100, name = "ID", nullable = false)
     private int idMaquina;
 
     @Column(length = 100, name = "NOME", nullable = false)

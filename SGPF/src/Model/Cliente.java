@@ -4,8 +4,13 @@ package Model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -22,18 +27,19 @@ public class Cliente extends Pessoa implements Serializable{
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     
-    private ArrayList<Projeto> listaProjetosCliente;
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name="PROJETO", joinColumns={@JoinColumn(name="idProduto", referencedColumnName="ID")})
+    private List<Projeto> listaProjetosCliente;
 
-    public Cliente(String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
-        super(cpfcnpj, nomeFantasia, razaoSocial, enderecoPessoa, telefonePessoa, emailPessoa, ativoPessoa);
+    public Cliente() {
     }
 
-    public ArrayList<Projeto> getListaProjetosCliente() {
+    public List<Projeto> getListaProjetosCliente() {
         return listaProjetosCliente;
     }
 
-    public void setListaProjetosCliente(ArrayList<Projeto> listaProjetosCliente) {
-        ArrayList<Projeto> oldListaProjetosCliente = this.listaProjetosCliente;
+    public void setListaProjetosCliente(List<Projeto> listaProjetosCliente) {
+        List<Projeto> oldListaProjetosCliente = this.listaProjetosCliente;
         this.listaProjetosCliente = listaProjetosCliente;
         changeSupport.firePropertyChange("listaProjetosCliente", oldListaProjetosCliente, listaProjetosCliente);
     }
