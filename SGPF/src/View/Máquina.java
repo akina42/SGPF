@@ -27,42 +27,43 @@ public class Máquina extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        maquinaPanel = new javax.swing.JPanel();
+        tituloMaquinaLbl = new javax.swing.JLabel();
+        nomeMaquinaLbl = new javax.swing.JLabel();
+        custoHoraMaquinaLbl = new javax.swing.JLabel();
+        nomeMaquinaTxtFld = new javax.swing.JTextField();
+        custoHoraMaquinaTxtFld = new javax.swing.JTextField();
+        estadoMaquinaTxtFld = new javax.swing.JTextField();
+        idMaquinaTxtFld = new javax.swing.JTextField();
+        estadoMaquinaLbl = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
+        listaMaquinaLbl = new javax.swing.JLabel();
+        salvarMaquinaButton = new javax.swing.JButton();
+        exckuirMaquinaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Máquina");
+        tituloMaquinaLbl.setText("Máquina");
 
-        jLabel2.setText("Nome da Máquina");
+        nomeMaquinaLbl.setText("Nome da Máquina");
 
-        jLabel4.setText("Custo por Hora");
+        custoHoraMaquinaLbl.setText("Custo por Hora");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        nomeMaquinaTxtFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                nomeMaquinaTxtFldActionPerformed(evt);
             }
         });
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        idMaquinaTxtFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                idMaquinaTxtFldActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("Estado");
+        estadoMaquinaLbl.setText("Estado");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,71 +78,92 @@ public class Máquina extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel7.setText("Lista de Máquinas");
+        listaMaquinaLbl.setText("Lista de Máquinas");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        salvarMaquinaButton.setText("Salvar");
+        salvarMaquinaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarMaquinaButtonActionPerformed(evt);
+            }
+        });
+
+        exckuirMaquinaButton.setText("Excluir");
+        exckuirMaquinaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exckuirMaquinaButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout maquinaPanelLayout = new javax.swing.GroupLayout(maquinaPanel);
+        maquinaPanel.setLayout(maquinaPanelLayout);
+        maquinaPanelLayout.setHorizontalGroup(
+            maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(maquinaPanelLayout.createSequentialGroup()
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(maquinaPanelLayout.createSequentialGroup()
                         .addGap(357, 357, 357)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                        .addComponent(tituloMaquinaLbl))
+                    .addGroup(maquinaPanelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nomeMaquinaLbl)
+                            .addComponent(custoHoraMaquinaLbl)
+                            .addComponent(estadoMaquinaLbl))
                         .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                        .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(custoHoraMaquinaTxtFld)
+                            .addComponent(estadoMaquinaTxtFld)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maquinaPanelLayout.createSequentialGroup()
+                                .addComponent(idMaquinaTxtFld, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(nomeMaquinaTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maquinaPanelLayout.createSequentialGroup()
                 .addComponent(jSeparator1)
                 .addGap(779, 779, 779))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+            .addGroup(maquinaPanelLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maquinaPanelLayout.createSequentialGroup()
+                        .addComponent(listaMaquinaLbl)
                         .addGap(317, 317, 317))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, maquinaPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))))
+            .addGroup(maquinaPanelLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(salvarMaquinaButton)
+                .addGap(54, 54, 54)
+                .addComponent(exckuirMaquinaButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        maquinaPanelLayout.setVerticalGroup(
+            maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(maquinaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(tituloMaquinaLbl)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(nomeMaquinaLbl)
+                        .addComponent(idMaquinaTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomeMaquinaTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(custoHoraMaquinaTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(custoHoraMaquinaLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(105, 105, 105)
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(estadoMaquinaTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(estadoMaquinaLbl))
+                .addGap(58, 58, 58)
+                .addGroup(maquinaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salvarMaquinaButton)
+                    .addComponent(exckuirMaquinaButton))
+                .addGap(24, 24, 24)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
+                .addComponent(listaMaquinaLbl)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(136, 136, 136))
@@ -151,23 +173,31 @@ public class Máquina extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(maquinaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(maquinaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void nomeMaquinaTxtFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeMaquinaTxtFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_nomeMaquinaTxtFldActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void idMaquinaTxtFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idMaquinaTxtFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_idMaquinaTxtFldActionPerformed
+
+    private void salvarMaquinaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarMaquinaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salvarMaquinaButtonActionPerformed
+
+    private void exckuirMaquinaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exckuirMaquinaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exckuirMaquinaButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,19 +235,20 @@ public class Máquina extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel custoHoraMaquinaLbl;
+    private javax.swing.JTextField custoHoraMaquinaTxtFld;
+    private javax.swing.JLabel estadoMaquinaLbl;
+    private javax.swing.JTextField estadoMaquinaTxtFld;
+    private javax.swing.JButton exckuirMaquinaButton;
+    private javax.swing.JTextField idMaquinaTxtFld;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel listaMaquinaLbl;
+    private javax.swing.JPanel maquinaPanel;
+    private javax.swing.JLabel nomeMaquinaLbl;
+    private javax.swing.JTextField nomeMaquinaTxtFld;
+    private javax.swing.JButton salvarMaquinaButton;
+    private javax.swing.JLabel tituloMaquinaLbl;
     // End of variables declaration//GEN-END:variables
 }
