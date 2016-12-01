@@ -5,9 +5,6 @@
  */
 package Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 /**
  *
  * @author leo

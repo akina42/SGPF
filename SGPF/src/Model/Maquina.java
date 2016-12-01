@@ -34,7 +34,7 @@ public class Maquina implements Serializable {
     @Column(length = 12, name = "CUSTOHORA", nullable = false)
     private Double custoHora;
     
-    @Column(length = 1, name = "ESTADO", nullable = false)
+    @Column(length = 20, name = "ESTADO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Estado estadoMaquina;
 

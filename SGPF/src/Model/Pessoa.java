@@ -44,7 +44,7 @@ public class Pessoa {
     @Column(length = 50, name = "EMAIL")
     private String emailPessoa;
     
-    @Column(length = 1, name = "STATUS")
+    @Column(length = 1, name = "STATUSPESSOA")
     private boolean ativoPessoa;
 
     public Pessoa( String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
