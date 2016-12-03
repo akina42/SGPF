@@ -48,29 +48,7 @@ public class Pessoa {
     @Column(length = 1, name = "STATUSPESSOA")
     private boolean ativoPessoa;
 
-    /*
-    public Pessoa( String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
-        
-        this.cpfcnpj = cpfcnpj;
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
-        this.enderecoPessoa = enderecoPessoa;
-        this.telefonePessoa = telefonePessoa;
-        this.emailPessoa = emailPessoa;
-        this.ativoPessoa = ativoPessoa;
-    }*/
-
-    
-    /*
-    public int getIdPessoa() {
-        return idPessoa;
-    }
-
-    public void setIdPessoa(int idPessoa) {
-        this.idPessoa = idPessoa;
-    }*/
-
-    public String getCpfcnpj() {
+     public String getCpfcnpj() {
         return cpfcnpj;
     }
 
@@ -124,6 +102,14 @@ public class Pessoa {
 
     public void setAtivoPessoa(boolean ativoPessoa) {
         this.ativoPessoa = ativoPessoa;
+    }
+
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
     

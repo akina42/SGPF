@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -23,6 +26,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MAQUINA")
 public class Maquina implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,17 +45,16 @@ public class Maquina implements Serializable {
     @Enumerated(EnumType.STRING)
     private Estado estadoMaquina;
 
-    public Maquina(String nomeMaquina, Double custoHora, Estado estadoMaquina) {
-    this.nomeMaquina = nomeMaquina;
-    this.custoHora = custoHora;
-    this.estadoMaquina = estadoMaquina;
+    public Maquina(){
     }
     public int getIdMaquina() {
         return idMaquina;
     }
 
     public void setIdMaquina(int idMaquina) {
+        int oldIdMaquina = this.idMaquina;
         this.idMaquina = idMaquina;
+        changeSupport.firePropertyChange("idMaquina", oldIdMaquina, idMaquina);
     }
 
     public String getNomeMaquina() {
@@ -57,7 +62,9 @@ public class Maquina implements Serializable {
     }
 
     public void setNomeMaquina(String nomeMaquina) {
+        String oldNomeMaquina = this.nomeMaquina;
         this.nomeMaquina = nomeMaquina;
+        changeSupport.firePropertyChange("nomeMaquina", oldNomeMaquina, nomeMaquina);
     }
 
     public Double getCustoHora() {
@@ -65,7 +72,9 @@ public class Maquina implements Serializable {
     }
 
     public void setCustoHora(Double custoHora) {
+        Double oldCustoHora = this.custoHora;
         this.custoHora = custoHora;
+        changeSupport.firePropertyChange("custoHora", oldCustoHora, custoHora);
     }
 
     public Estado getEstadoMaquina() {
@@ -73,6 +82,16 @@ public class Maquina implements Serializable {
     }
 
     public void setEstadoMaquina(Estado estadoMaquina) {
+        Estado oldEstadoMaquina = this.estadoMaquina;
         this.estadoMaquina = estadoMaquina;
+        changeSupport.firePropertyChange("estadoMaquina", oldEstadoMaquina, estadoMaquina);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 }

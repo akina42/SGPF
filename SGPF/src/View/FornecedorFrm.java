@@ -17,6 +17,16 @@ public class FornecedorFrm extends javax.swing.JFrame {
     public FornecedorFrm() {
         initComponents();
     }
+    
+    public void fieldRefresh(){
+        this.idFornecedorTxt.setText("");
+        this.nomeFornecedorTxt.setText("");
+        this.cpfcnpjFornecedorTxt.setText("");
+        this.razaosocialFornecedorTxt.setText("");
+        this.telefoneFornecedorTxt.setText("");
+        this.enderecoFornecedorTxt.setText("");
+        this.emailFornecedorTxt.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,6 +66,7 @@ public class FornecedorFrm extends javax.swing.JFrame {
         titulotabelaFornecedorLbl = new javax.swing.JLabel();
         salvalrFornecedorBtn = new javax.swing.JButton();
         excluirFornecedorBtn = new javax.swing.JButton();
+        limparFornecedorBtn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -131,6 +142,13 @@ public class FornecedorFrm extends javax.swing.JFrame {
             }
         });
 
+        limparFornecedorBtn.setText("Limpar");
+        limparFornecedorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparFornecedorBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -175,15 +193,8 @@ public class FornecedorFrm extends javax.swing.JFrame {
                             .addComponent(telefoneFornecedorLbl, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(emailFornecedorLbl, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(356, 356, 356)
-                                .addComponent(titulotabelaFornecedorLbl))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(332, 332, 332)
-                                .addComponent(salvalrFornecedorBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(excluirFornecedorBtn)))
+                        .addGap(356, 356, 356)
+                        .addComponent(titulotabelaFornecedorLbl)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -191,6 +202,14 @@ public class FornecedorFrm extends javax.swing.JFrame {
                     .addComponent(telefoneFornecedorTxt)
                     .addComponent(emailFornecedorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addGap(22, 22, 22))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(293, 293, 293)
+                .addComponent(salvalrFornecedorBtn)
+                .addGap(18, 18, 18)
+                .addComponent(excluirFornecedorBtn)
+                .addGap(18, 18, 18)
+                .addComponent(limparFornecedorBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +245,8 @@ public class FornecedorFrm extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(excluirFornecedorBtn)
-                    .addComponent(salvalrFornecedorBtn))
+                    .addComponent(salvalrFornecedorBtn)
+                    .addComponent(limparFornecedorBtn))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -257,6 +277,11 @@ public class FornecedorFrm extends javax.swing.JFrame {
     private void excluirFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFornecedorBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_excluirFornecedorBtnActionPerformed
+
+    private void limparFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparFornecedorBtnActionPerformed
+        // TODO add your handling code here:
+        this.fieldRefresh();
+    }//GEN-LAST:event_limparFornecedorBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,6 +346,7 @@ public class FornecedorFrm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton limparFornecedorBtn;
     private javax.swing.JTable listaFornecedorTbl;
     private javax.swing.JLabel nomeFornecedorLbl;
     private javax.swing.JTextField nomeFornecedorTxt;

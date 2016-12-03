@@ -7,7 +7,11 @@ package View;
 
 import Control.ClienteDAO;
 import Model.Cliente;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -21,14 +25,25 @@ public class ClienteFrm extends javax.swing.JFrame {
      */
     public ClienteFrm() {
         initComponents();
+        this.preencheTabela();
     }
     
     public void tableRefresh(){
-        try{
-            this.listaClienteTbl.repaint();
-        }catch(Exception e){
-            
-        }
+        ((AbstractTableModel) this.listaClienteTbl.getModel()).fireTableDataChanged();
+    }
+    
+    public void preencheTabela(){
+        
+        List<Cliente> listCliente = clienteDAO.obterClientes();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaClienteTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Nome");
+        dtm.addColumn("Cpf");
+        
+        for(Cliente cl : listCliente){
+                dtm.addRow(new Object[] {cl.getIdPessoa() , cl.getNomeFantasia(), cl.getCpfcnpj(),});
+            }
     }
     
     public void fieldRefresh(){
@@ -53,6 +68,19 @@ public class ClienteFrm extends javax.swing.JFrame {
     }
         return false;
     }
+    
+    public void preencheField(){
+        this.fieldRefresh();
+        Cliente cliente = clienteDAO.recuperaCliente((int) this.listaClienteTbl.getValueAt(this.listaClienteTbl.getSelectedRow(), 0));
+        this.idClienteTxt.setText(String.valueOf(cliente.getIdPessoa()));
+        this.nomeClienteTxt.setText(cliente.getNomeFantasia());
+        this.razaosocialClienteTxt.setText(cliente.getRazaoSocial());
+        this.emailClienteTxt.setText(cliente.getEmailPessoa());
+        this.enderecoClienteTxt.setText(cliente.getEnderecoPessoa());
+        this.telefoneClienteTxt.setText(cliente.getTelefonePessoa());
+        this.cpfcnpjClienteTxt.setText(cliente.getCpfcnpj());
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,6 +99,20 @@ public class ClienteFrm extends javax.swing.JFrame {
         clienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery.getResultList();
         clienteQuery1 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
         clienteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery1.getResultList();
+        clienteQuery2 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery2.getResultList();
+        clienteQuery3 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery3.getResultList();
+        clienteQuery4 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList4 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery4.getResultList();
+        clienteQuery5 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList5 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery5.getResultList();
+        clienteQuery6 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList6 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery6.getResultList();
+        maquinaQuery = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT m FROM Maquina m");
+        maquinaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : maquinaQuery.getResultList();
+        clienteQuery7 = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList7 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery7.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nomeClienteLbl = new javax.swing.JLabel();
@@ -89,12 +131,12 @@ public class ClienteFrm extends javax.swing.JFrame {
         ativoClienteCbx = new javax.swing.JCheckBox();
         emailClienteTxt = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaClienteTbl = new javax.swing.JTable();
         titulotabelaClienteLbl = new javax.swing.JLabel();
         salvarClienteBtn = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         limparClienteBtn = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listaClienteTbl = new javax.swing.JTable();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -162,16 +204,6 @@ public class ClienteFrm extends javax.swing.JFrame {
 
         ativoClienteCbx.setEnabled(false);
 
-        listaClienteTbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(listaClienteTbl);
-
         titulotabelaClienteLbl.setText("Lista de Clientes");
 
         salvarClienteBtn.setText("Salvar");
@@ -195,16 +227,28 @@ public class ClienteFrm extends javax.swing.JFrame {
             }
         });
 
+        listaClienteTbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        listaClienteTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaClienteTblMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaClienteTblMousePressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(listaClienteTbl);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jSeparator1))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -215,7 +259,7 @@ public class ClienteFrm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(enderecoClienteLbl)))
-                        .addGap(0, 175, Short.MAX_VALUE))
+                        .addGap(0, 165, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +298,13 @@ public class ClienteFrm extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
                         .addComponent(limparClienteBtn)))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(283, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jSeparator1))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,8 +347,8 @@ public class ClienteFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titulotabelaClienteLbl)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,6 +371,13 @@ public class ClienteFrm extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        try{       
+            clienteDAO.removerCliente(clienteDAO.recuperaCliente(Integer.parseInt(this.idClienteTxt.getText())));
+            this.fieldRefresh();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Selecione um cliente da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void limparClienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparClienteBtnActionPerformed
@@ -347,11 +404,21 @@ public class ClienteFrm extends javax.swing.JFrame {
             clienteDAO.salvarCliente(cliente);
             
             this.fieldRefresh();
+            this.tableRefresh();
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO"  , JOptionPane.ERROR_MESSAGE);
         }}
     }//GEN-LAST:event_salvarClienteBtnActionPerformed
+
+    private void listaClienteTblMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClienteTblMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaClienteTblMousePressed
+
+    private void listaClienteTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaClienteTblMouseClicked
+        // TODO add your handling code here:
+        this.preencheField();
+    }//GEN-LAST:event_listaClienteTblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -394,8 +461,20 @@ public class ClienteFrm extends javax.swing.JFrame {
     private javax.swing.JLabel ativoClienteLbl;
     private java.util.List<Model.Cliente> clienteList;
     private java.util.List<Model.Cliente> clienteList1;
+    private java.util.List<Model.Cliente> clienteList2;
+    private java.util.List<Model.Cliente> clienteList3;
+    private java.util.List<Model.Cliente> clienteList4;
+    private java.util.List<Model.Cliente> clienteList5;
+    private java.util.List<Model.Cliente> clienteList6;
+    private java.util.List<Model.Cliente> clienteList7;
     private javax.persistence.Query clienteQuery;
     private javax.persistence.Query clienteQuery1;
+    private javax.persistence.Query clienteQuery2;
+    private javax.persistence.Query clienteQuery3;
+    private javax.persistence.Query clienteQuery4;
+    private javax.persistence.Query clienteQuery5;
+    private javax.persistence.Query clienteQuery6;
+    private javax.persistence.Query clienteQuery7;
     private javax.swing.JLabel cpfcnpjClienteLbl;
     private javax.swing.JFormattedTextField cpfcnpjClienteTxt;
     private javax.swing.JLabel emailClienteLbl;
@@ -408,11 +487,13 @@ public class ClienteFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton limparClienteBtn;
     private javax.swing.JTable listaClienteTbl;
+    private java.util.List<Model.Maquina> maquinaList;
+    private javax.persistence.Query maquinaQuery;
     private javax.swing.JLabel nomeClienteLbl;
     private javax.swing.JTextField nomeClienteTxt;
     private javax.swing.JLabel razaoSocialClienteLbl;
