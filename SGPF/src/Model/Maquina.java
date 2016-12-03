@@ -15,6 +15,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -42,6 +44,7 @@ public class Maquina implements Serializable {
     private Double custoHora;
     
     @Column(length = 20, name = "ESTADO", nullable = false)
+    @JoinTable(name = "ESTADO", joinColumns=@JoinColumn(name = "IdEstado"))
     @Enumerated(EnumType.STRING)
     private Estado estadoMaquina;
 

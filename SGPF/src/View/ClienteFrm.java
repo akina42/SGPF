@@ -28,10 +28,6 @@ public class ClienteFrm extends javax.swing.JFrame {
         this.preencheTabela();
     }
     
-    public void tableRefresh(){
-        ((AbstractTableModel) this.listaClienteTbl.getModel()).fireTableDataChanged();
-    }
-    
     public void preencheTabela(){
         
         List<Cliente> listCliente = clienteDAO.obterClientes();
@@ -162,7 +158,7 @@ public class ClienteFrm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -283,8 +279,8 @@ public class ClienteFrm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cpfcnpjClienteTxt)
-                    .addComponent(telefoneClienteTxt)
-                    .addComponent(emailClienteTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                    .addComponent(telefoneClienteTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(emailClienteTxt))
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +294,7 @@ public class ClienteFrm extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
                         .addComponent(limparClienteBtn)))
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -347,8 +343,8 @@ public class ClienteFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titulotabelaClienteLbl)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -390,6 +386,15 @@ public class ClienteFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.checaVazio()){
             JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(!this.idClienteTxt.getText().toString().equals("")){
+            clienteDAO.atualizarCliente(Integer.parseInt(this.idClienteTxt.getText()), 
+                    this.nomeClienteTxt.getText(),
+                    this.razaosocialClienteTxt.getText(),
+                    this.enderecoClienteTxt.getText(),
+                    this.cpfcnpjClienteTxt.getText(),
+                    this.telefoneClienteTxt.getText(),
+                    this.emailClienteTxt.getText());
+            this.preencheTabela();
         }else{
         try{
             Cliente cliente = new Cliente();

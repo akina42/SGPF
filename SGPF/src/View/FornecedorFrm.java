@@ -142,7 +142,7 @@ public class FornecedorFrm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Clientes");
         setMinimumSize(new java.awt.Dimension(800, 600));
 
@@ -271,8 +271,8 @@ public class FornecedorFrm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cpfcnpjFornecedorTxt)
-                    .addComponent(telefoneFornecedorTxt)
-                    .addComponent(emailFornecedorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                    .addComponent(telefoneFornecedorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(emailFornecedorTxt))
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(293, 293, 293)
@@ -353,7 +353,7 @@ public class FornecedorFrm extends javax.swing.JFrame {
             this.fieldRefresh();
             this.preencheTabela();
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, ("Selecione um cliente da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Selecione um fornecedor da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_excluirFornecedorBtnActionPerformed
@@ -368,7 +368,14 @@ public class FornecedorFrm extends javax.swing.JFrame {
         if(this.checaVazio()){
             JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
         }else if(!this.idFornecedorTxt.getText().toString().equals("")){
-            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+            fornecedorDAO.atualizarFornecedor(Integer.parseInt(this.idFornecedorTxt.getText()), 
+                    this.nomeFornecedorTxt.getText(),
+                    this.razaosocialFornecedorTxt.getText(),
+                    this.enderecoFornecedorTxt.getText(),
+                    this.cpfcnpjFornecedorTxt.getText(),
+                    this.telefoneFornecedorTxt.getText(),
+                    this.emailFornecedorTxt.getText());
+            this.preencheTabela();
         }else{
         try{
             Fornecedor fornecedor = new Fornecedor();

@@ -63,4 +63,20 @@ public class ClienteDAO {
         }
     }
     
+    public void atualizarCliente(int pk, String nome, String razao, String endereco, String cpfcnpj, String telefone, String email){
+        try{
+            Cliente cliente = this.recuperaCliente(pk);
+            em.getTransaction().begin();
+            cliente.setNomeFantasia(nome);
+            cliente.setRazaoSocial(razao);
+            cliente.setEnderecoPessoa(endereco);
+            cliente.setCpfcnpj(cpfcnpj);
+            cliente.setTelefonePessoa(telefone);
+            cliente.setEmailPessoa(email);
+            em.getTransaction().commit();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Erro ao atualizar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }

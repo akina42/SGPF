@@ -207,7 +207,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Clientes"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[800, 600]"/>
@@ -294,8 +294,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="cpfcnpjClienteTxt" max="32767" attributes="0"/>
-                      <Component id="telefoneClienteTxt" max="32767" attributes="0"/>
-                      <Component id="emailClienteTxt" pref="153" max="32767" attributes="0"/>
+                      <Component id="telefoneClienteTxt" pref="153" max="32767" attributes="0"/>
+                      <Component id="emailClienteTxt" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -314,7 +314,7 @@
                           <Component id="limparClienteBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="283" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
@@ -375,8 +375,8 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="titulotabelaClienteLbl" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane3" min="-2" pref="288" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

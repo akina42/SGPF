@@ -65,8 +65,20 @@ public class FornecedorDAO {
         }
     }
     
-    public void atualizarFornecedor(int pk){
-        
+    public void atualizarFornecedor(int pk, String nome, String razao, String endereco, String cpfcnpj, String telefone, String email){
+        try{
+            Fornecedor fornecedor = this.recuperaFornecedor(pk);
+            em.getTransaction().begin();
+            fornecedor.setNomeFantasia(nome);
+            fornecedor.setRazaoSocial(razao);
+            fornecedor.setEnderecoPessoa(endereco);
+            fornecedor.setCpfcnpj(cpfcnpj);
+            fornecedor.setTelefonePessoa(telefone);
+            fornecedor.setEmailPessoa(email);
+            em.getTransaction().commit();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Erro ao atualizar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
 }
