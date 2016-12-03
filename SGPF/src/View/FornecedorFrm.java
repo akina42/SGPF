@@ -5,17 +5,26 @@
  */
 package View;
 
+import Control.FornecedorDAO;
+import Model.Fornecedor;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author leo
  */
 public class FornecedorFrm extends javax.swing.JFrame {
+    
+    FornecedorDAO fornecedorDAO = new FornecedorDAO();
 
     /**
      * Creates new form ClienteFrm
      */
     public FornecedorFrm() {
         initComponents();
+        this.preencheTabela();
     }
     
     public void fieldRefresh(){
@@ -27,6 +36,47 @@ public class FornecedorFrm extends javax.swing.JFrame {
         this.enderecoFornecedorTxt.setText("");
         this.emailFornecedorTxt.setText("");
     }
+    
+    public boolean checaVazio(){
+        if(
+        this.nomeFornecedorTxt.getText().equals("") ||
+        this.cpfcnpjFornecedorTxt.toString().equals("") ||
+        this.razaosocialFornecedorTxt.getText().equals("") ||
+        this.telefoneFornecedorTxt.toString().equals("") ||
+        this.enderecoFornecedorTxt.getText().equals("") ||
+        this.emailFornecedorTxt.getText().equals("")){
+        return true;
+    }
+        return false;
+    }
+    
+    public void preencheTabela(){
+        
+        List<Fornecedor> listFornecedor = fornecedorDAO.obterFornecedor();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaFornecedorTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Nome");
+        dtm.addColumn("Cpf");
+        
+        for(Fornecedor fr : listFornecedor){
+                dtm.addRow(new Object[] {fr.getIdPessoa() , fr.getNomeFantasia(), fr.getCpfcnpj(),});
+            }
+    }
+    
+    public void preencheField(){
+        this.fieldRefresh();
+        Fornecedor fornecedor = fornecedorDAO.recuperaFornecedor((int) this.listaFornecedorTbl.getValueAt(this.listaFornecedorTbl.getSelectedRow(), 0));
+        this.idFornecedorTxt.setText(String.valueOf(fornecedor.getIdPessoa()));
+        this.nomeFornecedorTxt.setText(fornecedor.getNomeFantasia());
+        this.razaosocialFornecedorTxt.setText(fornecedor.getRazaoSocial());
+        this.emailFornecedorTxt.setText(fornecedor.getEmailPessoa());
+        this.enderecoFornecedorTxt.setText(fornecedor.getEnderecoPessoa());
+        this.telefoneFornecedorTxt.setText(fornecedor.getTelefonePessoa());
+        this.cpfcnpjFornecedorTxt.setText(fornecedor.getCpfcnpj());
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,6 +160,18 @@ public class FornecedorFrm extends javax.swing.JFrame {
 
         cpfcnpjFornecedorLbl.setText("CPF/CNPJ");
 
+        try {
+            cpfcnpjFornecedorTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##############")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            telefoneFornecedorTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         idFornecedorTxt.setEnabled(false);
         idFornecedorTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,11 +191,21 @@ public class FornecedorFrm extends javax.swing.JFrame {
 
             }
         ));
+        listaFornecedorTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaFornecedorTblMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaFornecedorTbl);
 
         titulotabelaFornecedorLbl.setText("Lista de Fornecedores");
 
         salvalrFornecedorBtn.setText("Salvar");
+        salvalrFornecedorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvalrFornecedorBtnActionPerformed(evt);
+            }
+        });
 
         excluirFornecedorBtn.setText("Excluir");
         excluirFornecedorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -276,12 +348,53 @@ public class FornecedorFrm extends javax.swing.JFrame {
 
     private void excluirFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFornecedorBtnActionPerformed
         // TODO add your handling code here:
+        try{       
+            fornecedorDAO.removerCliente(fornecedorDAO.recuperaFornecedor(Integer.parseInt(this.idFornecedorTxt.getText())));
+            this.fieldRefresh();
+            this.preencheTabela();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Selecione um cliente da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_excluirFornecedorBtnActionPerformed
 
     private void limparFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparFornecedorBtnActionPerformed
         // TODO add your handling code here:
         this.fieldRefresh();
     }//GEN-LAST:event_limparFornecedorBtnActionPerformed
+
+    private void salvalrFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvalrFornecedorBtnActionPerformed
+        // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(!this.idFornecedorTxt.getText().toString().equals("")){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else{
+        try{
+            Fornecedor fornecedor = new Fornecedor();
+            
+            fornecedor.setCpfcnpj(this.cpfcnpjFornecedorTxt.getText());
+            fornecedor.setNomeFantasia(this.nomeFornecedorTxt.getText());
+            fornecedor.setRazaoSocial(this.razaosocialFornecedorTxt.getText());
+            fornecedor.setEnderecoPessoa(this.enderecoFornecedorTxt.getText());
+            fornecedor.setTelefonePessoa( this.telefoneFornecedorTxt.getText());                               
+            fornecedor.setEmailPessoa(this.emailFornecedorTxt.getText());                               
+            fornecedor.setAtivoPessoa(true);
+            
+            fornecedorDAO.salvarFornecedor(fornecedor);
+            
+            this.fieldRefresh();
+            this.preencheTabela();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO"  , JOptionPane.ERROR_MESSAGE);
+        }}
+    }//GEN-LAST:event_salvalrFornecedorBtnActionPerformed
+
+    private void listaFornecedorTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFornecedorTblMouseClicked
+        // TODO add your handling code here:
+        this.preencheField();
+    }//GEN-LAST:event_listaFornecedorTblMouseClicked
 
     /**
      * @param args the command line arguments

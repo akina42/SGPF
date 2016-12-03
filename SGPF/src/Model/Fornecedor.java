@@ -6,30 +6,31 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author leo
  */
+
+@Entity
+@Table(name="FORNECEDOR")
+
 public class Fornecedor extends Pessoa{
     
-    private ArrayList<Projeto> listaProjetosCliente;
+    @OneToMany(orphanRemoval = true)
+    @JoinTable(name="COMPRAS", joinColumns={@JoinColumn(name="idCompra", referencedColumnName="ID")})
+    private List<Compra> listaComprasFornecedor;
 
-    /*
-    public Fornecedor( String cpfcnpj, String nomeFantasia, String razaoSocial, String enderecoPessoa, String telefonePessoa, String emailPessoa, boolean ativoPessoa) {
-        super(cpfcnpj, nomeFantasia, razaoSocial, enderecoPessoa, telefonePessoa, emailPessoa, ativoPessoa);
-    }*/
-
-    public ArrayList<Projeto> getListaProjetosCliente() {
-        return listaProjetosCliente;
+    public List<Compra> getListaComprasFornecedor() {
+        return listaComprasFornecedor;
     }
 
-    public void setListaProjetosCliente(ArrayList<Projeto> listaProjetosCliente) {
-        this.listaProjetosCliente = listaProjetosCliente;
+    public void setListaComprasFornecedor(List<Compra> listaComprasFornecedor) {
+        this.listaComprasFornecedor = listaComprasFornecedor;
     }
-    
-   
-    
- 
+
+
     
 }
