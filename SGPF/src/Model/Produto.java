@@ -12,6 +12,10 @@ import javax.persistence.*;
  *
  * @author user
  */
+
+@Entity 
+@Table(name = "PRODUTO")
+
 public class Produto {
    
    @Id
@@ -28,15 +32,10 @@ public class Produto {
    @Enumerated(EnumType.STRING)
    private Unidade UnidadeProduto;
    
-   @Column (name = "ATIVO_PRODUTO", nullable = false)
-   private boolean AtivoProduto;
    
 
-    public Produto(String NomeProduto, Double Quantidade, Unidade UnidadeProduto, boolean AtivoProduto) {
-        this.NomeProduto = NomeProduto;
-        this.Quantidade = Quantidade;
-        this.UnidadeProduto = UnidadeProduto;
-        this.AtivoProduto = AtivoProduto;
+    public Produto() {
+        
     }
   
 
@@ -71,16 +70,6 @@ public class Produto {
     public void setUnidadeProduto(Unidade UnidadeProduto) {
         this.UnidadeProduto = UnidadeProduto;
     }
-
-    public boolean isAtivoProduto() {
-        return AtivoProduto;
-    }
-
-    public void setAtivoProduto(boolean AtivoProduto) {
-        this.AtivoProduto = AtivoProduto;
-    }
-   
-   
-   
+ 
     
 }

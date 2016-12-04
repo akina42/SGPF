@@ -5,18 +5,103 @@
  */
 package View;
 
+import Control.ProdutoDAO;
+import Model.Produto;
+import Model.Unidade;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author user
  */
 public class ProdutoFrm extends javax.swing.JFrame {
+    
+    ProdutoDAO produtoDAO = new ProdutoDAO();
 
     /**
      * Creates new form ProdutoFrm
      */
     public ProdutoFrm() {
         initComponents();
+        preencheTabela();
     }
+    
+    
+    public void preencheTabela(){
+        List<Produto> listProduto = produtoDAO.obterProdutos();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaProdutoTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Produto");
+        dtm.addColumn("Quantidade");
+        dtm.addColumn("Unidade");
+        
+        for(Produto pr : listProduto){
+                dtm.addRow(new Object[] {pr.getIdProduto() , pr.getNomeProduto(), pr.getQuantidade(), pr.getUnidadeProduto().toString()});
+            }
+    }
+    
+    public void fieldRefresh(){
+        this.idProdutoTxtFld.setText("");
+        this.nomeProdutoTxtFld.setText("");
+        this.quantidadeProdutoTxtFld.setText("");           
+    }
+    
+    
+    public boolean checaVazio(){
+        if(
+        this.nomeProdutoTxtFld.getText().equals("") ||
+        this.quantidadeProdutoTxtFld.getText().equals("")){
+        return true;
+    }
+        return false;
+    }
+    
+    
+    public void preencheField(){
+        this.fieldRefresh();
+        Produto produto = produtoDAO.recuperaProduto((int) this.listaProdutoTbl.getValueAt(this.listaProdutoTbl.getSelectedRow(), 0));
+        this.idProdutoTxtFld.setText(String.valueOf(produto.getIdProduto()));
+        this.nomeProdutoTxtFld.setText(produto.getNomeProduto());
+        this.quantidadeProdutoTxtFld.setText(produto.getQuantidade().toString());
+        Unidade und = produto.getUnidadeProduto();
+        switch(und){
+            case QUILO: this.unidadeProdutoCbx.setSelectedIndex(0);
+            break;
+            case METRO: this.unidadeProdutoCbx.setSelectedIndex(1);
+            break;
+            case CMCUBICO: this.unidadeProdutoCbx.setSelectedIndex(2);
+            break;
+            case CMQUADRADO: this.unidadeProdutoCbx.setSelectedIndex(3);
+            break;
+            case UNITARIO: this.unidadeProdutoCbx.setSelectedIndex(4);
+            break;
+        }
+    }
+    
+    
+    public Unidade obterUnidade(){
+        String opcao = this.unidadeProdutoCbx.getSelectedItem().toString();
+        if (opcao.equals("QUILO")){
+            return Unidade.QUILO;
+        }
+        else if (opcao.equals("METRO")){
+            return Unidade.METRO;
+        }
+        else if (opcao.equals("CM CÚBICO")){
+            return Unidade.CMCUBICO;
+        }
+        else if (opcao.equals("CM QUADRADO")){
+            return Unidade.CMQUADRADO;
+        }
+        else {
+            return Unidade.UNITARIO;
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,19 +118,18 @@ public class ProdutoFrm extends javax.swing.JFrame {
         quantidadeProdutoLbl = new javax.swing.JLabel();
         nomeProdutoTxtFld = new javax.swing.JTextField();
         quantidadeProdutoTxtFld = new javax.swing.JTextField();
-        unidadeProdutoTxtFld = new javax.swing.JTextField();
         idProdutoTxtFld = new javax.swing.JTextField();
         unidadeProdutoLbl = new javax.swing.JLabel();
-        ativoProdutoLbl = new javax.swing.JLabel();
-        ativoProdutoCheck = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listaProdutoTbl = new javax.swing.JTable();
         ListaProdutosLbl = new javax.swing.JLabel();
         salvarProdutoButton = new javax.swing.JButton();
-        exckuirProdutoButton = new javax.swing.JButton();
+        excluirProdutoButton = new javax.swing.JButton();
+        unidadeProdutoCbx = new javax.swing.JComboBox<>();
+        limparProdutoButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de Gestão de Projetos");
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -62,6 +146,7 @@ public class ProdutoFrm extends javax.swing.JFrame {
             }
         });
 
+        idProdutoTxtFld.setEnabled(false);
         idProdutoTxtFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idProdutoTxtFldActionPerformed(evt);
@@ -70,20 +155,23 @@ public class ProdutoFrm extends javax.swing.JFrame {
 
         unidadeProdutoLbl.setText("Unidade");
 
-        ativoProdutoLbl.setText("Ativo");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        listaProdutoTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "ID", "Produto", "Quantidade", "Unidade"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        listaProdutoTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutoTblMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaProdutoTbl);
 
         ListaProdutosLbl.setText("Lista de Produtos Cadastrados");
 
@@ -94,10 +182,24 @@ public class ProdutoFrm extends javax.swing.JFrame {
             }
         });
 
-        exckuirProdutoButton.setText("Excluir");
-        exckuirProdutoButton.addActionListener(new java.awt.event.ActionListener() {
+        excluirProdutoButton.setText("Excluir");
+        excluirProdutoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exckuirProdutoButtonActionPerformed(evt);
+                excluirProdutoButtonActionPerformed(evt);
+            }
+        });
+
+        unidadeProdutoCbx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "QUILO", "METRO", "CM CÚBICO", "CM QUADRADO", "UNITÁRIO" }));
+        unidadeProdutoCbx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unidadeProdutoCbxActionPerformed(evt);
+            }
+        });
+
+        limparProdutoButton.setText("Limpar");
+        limparProdutoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparProdutoButtonActionPerformed(evt);
             }
         });
 
@@ -126,25 +228,25 @@ public class ProdutoFrm extends javax.swing.JFrame {
                                 .addGroup(produtoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nomeProdutoLbl)
                                     .addComponent(quantidadeProdutoLbl)
-                                    .addComponent(unidadeProdutoLbl)
-                                    .addComponent(ativoProdutoLbl))
+                                    .addComponent(unidadeProdutoLbl))
                                 .addGap(33, 33, 33)
                                 .addGroup(produtoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(quantidadeProdutoTxtFld)
-                                    .addComponent(unidadeProdutoTxtFld)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, produtoPnlLayout.createSequentialGroup()
                                         .addComponent(idProdutoTxtFld, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                                         .addGap(18, 18, 18)
                                         .addComponent(nomeProdutoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(ativoProdutoCheck))))
+                                    .addComponent(unidadeProdutoCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator1))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, produtoPnlLayout.createSequentialGroup()
-                .addGap(262, 262, 262)
+                .addGap(268, 268, 268)
                 .addComponent(salvarProdutoButton)
-                .addGap(54, 54, 54)
-                .addComponent(exckuirProdutoButton)
+                .addGap(53, 53, 53)
+                .addComponent(excluirProdutoButton)
+                .addGap(66, 66, 66)
+                .addComponent(limparProdutoButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         produtoPnlLayout.setVerticalGroup(
@@ -163,17 +265,14 @@ public class ProdutoFrm extends javax.swing.JFrame {
                     .addComponent(quantidadeProdutoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantidadeProdutoLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(produtoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unidadeProdutoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(unidadeProdutoLbl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(produtoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ativoProdutoLbl)
-                    .addComponent(ativoProdutoCheck))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                    .addComponent(unidadeProdutoLbl)
+                    .addComponent(unidadeProdutoCbx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(produtoPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarProdutoButton)
-                    .addComponent(exckuirProdutoButton))
+                    .addComponent(excluirProdutoButton)
+                    .addComponent(limparProdutoButton))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -210,11 +309,60 @@ public class ProdutoFrm extends javax.swing.JFrame {
 
     private void salvarProdutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarProdutoButtonActionPerformed
         // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(!this.idProdutoTxtFld.getText().toString().equals("")){
+            produtoDAO.atualizarProduto(Integer.parseInt(this.idProdutoTxtFld.getText()), 
+                    this.nomeProdutoTxtFld.getText(),
+                    Double.parseDouble(this.quantidadeProdutoTxtFld.getText()),
+                    this.obterUnidade());
+                    
+            this.preencheTabela();
+        }else{
+        try{
+            Produto produto = new Produto();
+            
+            produto.setNomeProduto(this.nomeProdutoTxtFld.getText());
+            produto.setQuantidade(Double.parseDouble(this.quantidadeProdutoTxtFld.getText())); 
+            produto.setUnidadeProduto(this.obterUnidade());
+          
+            
+            produtoDAO.salvarProduto(produto);
+            
+            this.fieldRefresh();
+            this.preencheTabela();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO"  , JOptionPane.ERROR_MESSAGE);
+        }
+        }
     }//GEN-LAST:event_salvarProdutoButtonActionPerformed
 
-    private void exckuirProdutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exckuirProdutoButtonActionPerformed
+    private void excluirProdutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirProdutoButtonActionPerformed
+        // TODO add your handling code here:  
+        try{       
+            produtoDAO.removerProduto(produtoDAO.recuperaProduto(Integer.parseInt(this.idProdutoTxtFld.getText())));
+            this.fieldRefresh();
+            this.preencheTabela();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Selecione um cliente da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    }//GEN-LAST:event_excluirProdutoButtonActionPerformed
+
+    private void unidadeProdutoCbxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unidadeProdutoCbxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_exckuirProdutoButtonActionPerformed
+    }//GEN-LAST:event_unidadeProdutoCbxActionPerformed
+
+    private void limparProdutoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparProdutoButtonActionPerformed
+        // TODO add your handling code here:
+        this.fieldRefresh();
+    }//GEN-LAST:event_limparProdutoButtonActionPerformed
+
+    private void listaProdutoTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutoTblMouseClicked
+        // TODO add your handling code here:
+        this.preencheField();
+    }//GEN-LAST:event_listaProdutoTblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -253,13 +401,12 @@ public class ProdutoFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ListaProdutosLbl;
-    private javax.swing.JCheckBox ativoProdutoCheck;
-    private javax.swing.JLabel ativoProdutoLbl;
-    private javax.swing.JButton exckuirProdutoButton;
+    private javax.swing.JButton excluirProdutoButton;
     private javax.swing.JTextField idProdutoTxtFld;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton limparProdutoButton;
+    private javax.swing.JTable listaProdutoTbl;
     private javax.swing.JLabel nomeProdutoLbl;
     private javax.swing.JTextField nomeProdutoTxtFld;
     private javax.swing.JPanel produtoPnl;
@@ -267,7 +414,7 @@ public class ProdutoFrm extends javax.swing.JFrame {
     private javax.swing.JTextField quantidadeProdutoTxtFld;
     private javax.swing.JButton salvarProdutoButton;
     private javax.swing.JLabel tituloProdutoLbl;
+    private javax.swing.JComboBox<String> unidadeProdutoCbx;
     private javax.swing.JLabel unidadeProdutoLbl;
-    private javax.swing.JTextField unidadeProdutoTxtFld;
     // End of variables declaration//GEN-END:variables
 }
