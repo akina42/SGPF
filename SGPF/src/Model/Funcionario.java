@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author user
+ * @author akina
  */
 
 @Entity
@@ -25,10 +25,11 @@ public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (length = 20, name = "ID", nullable = false)
     private int idFuncionario;
     
-    @Column(length = 20, name = "PIS", nullable = false)
-    private int pis;
+    @Column(length = 20, name = "CPF", nullable = false)
+    private int cpfFuncionario;
     
     @Column(length = 100, name = "NOME", nullable = false)
     private String nomeFuncionario;
@@ -39,13 +40,7 @@ public class Funcionario implements Serializable {
     @Column(length = 1, name = "ATIVO", nullable = false)
     private boolean funcionarioAtivo;
 
-    public Funcionario(int pis, String nomeFuncionario, Double custoHora, boolean funcionarioAtivo) {
-        this.pis = pis;
-        this.nomeFuncionario = nomeFuncionario;
-        this.custoHora = custoHora;
-        this.funcionarioAtivo = funcionarioAtivo;
-    }
-
+    
     public int getIdFuncionario() {
         return idFuncionario;
     }
@@ -54,12 +49,12 @@ public class Funcionario implements Serializable {
         this.idFuncionario = idFuncionario;
     }
 
-    public int getPis() {
-        return pis;
+    public int getCpfFuncionario() {
+        return cpfFuncionario;
     }
 
-    public void setPis(int pis) {
-        this.pis = pis;
+    public void setCpfFuncionario(int cpfFuncionario) {
+        this.cpfFuncionario = cpfFuncionario;
     }
 
     public String getNomeFuncionario() {

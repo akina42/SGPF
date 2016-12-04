@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author user
+ * @author akina
  */
 public class ProdutoFrm extends javax.swing.JFrame {
     
