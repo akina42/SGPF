@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author user
+ * @author leo
  */
 public class MaquinaFrm extends javax.swing.JFrame {
     
