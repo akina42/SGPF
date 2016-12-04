@@ -349,7 +349,7 @@ public class FornecedorFrm extends javax.swing.JFrame {
     private void excluirFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFornecedorBtnActionPerformed
         // TODO add your handling code here:
         try{       
-            fornecedorDAO.removerCliente(fornecedorDAO.recuperaFornecedor(Integer.parseInt(this.idFornecedorTxt.getText())));
+            fornecedorDAO.removerFornecedor(fornecedorDAO.recuperaFornecedor(Integer.parseInt(this.idFornecedorTxt.getText())));
             this.fieldRefresh();
             this.preencheTabela();
         }catch(Exception e){

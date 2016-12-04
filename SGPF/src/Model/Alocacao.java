@@ -5,12 +5,25 @@
  */
 package Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author akina
  */
+
+@Entity
+@Table(name="PROJETO")
 public class Alocacao {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(length = 10, name = "IDPROJETO", nullable = false)
     private int idAlocacao;
     
     private Projeto projetoAlocacao;

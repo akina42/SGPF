@@ -60,7 +60,7 @@ public class ProdutoFrm extends javax.swing.JFrame {
     }
     
     
-    public void preencheField(){
+        public void preencheField(){
         this.fieldRefresh();
         Produto produto = produtoDAO.recuperaProduto((int) this.listaProdutoTbl.getValueAt(this.listaProdutoTbl.getSelectedRow(), 0));
         this.idProdutoTxtFld.setText(String.valueOf(produto.getIdProduto()));

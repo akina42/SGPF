@@ -55,7 +55,7 @@ public class FornecedorDAO {
         
     }
     
-    public void removerCliente(Fornecedor fornecedor){
+    public void removerFornecedor(Fornecedor fornecedor){
         try{
             em.getTransaction().begin();
             em.remove(fornecedor);

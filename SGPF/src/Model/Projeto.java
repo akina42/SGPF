@@ -30,19 +30,17 @@ public class Projeto implements Serializable {
     
     private String descricaoProjeto;
     
-    private Alocacao alocacaoProjeto;
-    
     private Double margemDeLucroProjeto;
     
     private Double precoFinalProjeto;
     
     private EstadoProjeto estadoProjeto;
     
-    private ArrayList<Alocacao> alocacoesProduto;
+    //private ArrayList<Alocacao> alocacoesProduto;
     
-    private ArrayList<Alocacao> alocacoesFuncionario;
+    //private ArrayList<Alocacao> alocacoesFuncionario;
     
-    private ArrayList<Alocacao> alocacoesMaquina;
+    //private ArrayList<Alocacao> alocacoesMaquina;
 
     public int getIdProjeto() {
         return idProjeto;
@@ -76,14 +74,6 @@ public class Projeto implements Serializable {
         this.descricaoProjeto = descricaoProjeto;
     }
 
-    public Alocacao getAlocacaoProjeto() {
-        return alocacaoProjeto;
-    }
-
-    public void setAlocacaoProjeto(Alocacao alocacaoProjeto) {
-        this.alocacaoProjeto = alocacaoProjeto;
-    }
-
     public Double getMargemDeLucroProjeto() {
         return margemDeLucroProjeto;
     }
@@ -108,6 +98,7 @@ public class Projeto implements Serializable {
         this.estadoProjeto = estadoProjeto;
     }
 
+    /*
     public ArrayList<Alocacao> getAlocacoesProduto() {
         return alocacoesProduto;
     }
@@ -132,6 +123,6 @@ public class Projeto implements Serializable {
         this.alocacoesMaquina = alocacoesMaquina;
     }
     
-    
+    */
     
 }

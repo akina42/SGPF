@@ -9,7 +9,6 @@ import Control.ClienteDAO;
 import Model.Cliente;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 
