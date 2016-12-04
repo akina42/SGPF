@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 /**
  *
- * @author user
+ * @author akina
  */
 
 @Entity 

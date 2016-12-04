@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 /**
  *
- * @author Akina
+ * @author akina
  */
 @Entity
 @Table(name="PROJETO")

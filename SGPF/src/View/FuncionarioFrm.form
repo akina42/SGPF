@@ -116,52 +116,53 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="352" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="131" max="32767" attributes="0"/>
+                                  <Component id="tituloFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="156" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="razaoSocialFuncionarioLbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="nomeFuncionarioLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="ativoFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="razaoSocialFuncionarioLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="nomeFuncionarioLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
-                                          <Component id="idFuncionarioTxt" min="-2" pref="38" max="-2" attributes="0"/>
+                                          <Component id="idFuncionarioTxtFld" min="-2" pref="38" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="nomeFuncionarioTxt" max="32767" attributes="0"/>
+                                          <Component id="nomeFuncionarioTxtFld" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="custoHoraFuncionarioTxtFld" min="-2" pref="153" max="-2" attributes="0"/>
                                               <Component id="ativoFuncionarioCbx" min="-2" max="-2" attributes="0"/>
-                                              <Component id="telefoneFuncionarioTxt" min="-2" pref="153" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cpfcnpjFuncionarioLbl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          <Component id="cpfcnpjFuncionarioTxt" min="-2" pref="153" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="cpfFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="cpfFuncionarioTxtFld" min="-2" pref="153" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="356" max="-2" attributes="0"/>
                                   <Component id="titulotabelaFuncionarioLbl" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="332" max="-2" attributes="0"/>
-                                  <Component id="salvalrFornecedorBtn" min="-2" max="-2" attributes="0"/>
+                                  <Component id="salvarFuncionarioButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="excluirFornecedorBtn" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="ativoFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                                  <Component id="excluirFuncionarioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="limparFuncionarioButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -175,31 +176,34 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <Component id="tituloFuncionarioLbl" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="nomeFuncionarioLbl" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="nomeFuncionarioTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cpfcnpjFuncionarioLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cpfcnpjFuncionarioTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="idFuncionarioTxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="nomeFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="nomeFuncionarioTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cpfFuncionarioLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cpfFuncionarioTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="idFuncionarioTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="razaoSocialFuncionarioLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="custoHoraFuncionarioTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="ativoFuncionarioLbl" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="razaoSocialFuncionarioLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="telefoneFuncionarioTxt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ativoFuncionarioCbx" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="ativoFuncionarioLbl" min="-2" max="-2" attributes="0"/>
+                      <Component id="ativoFuncionarioCbx" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="excluirFornecedorBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="salvalrFornecedorBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="excluirFuncionarioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="salvarFuncionarioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="limparFuncionarioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -213,7 +217,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="tituloFuncionarioLbl">
           <Properties>
             <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
           </Properties>
@@ -228,28 +232,31 @@
             <Property name="text" type="java.lang.String" value="Custo/Hora"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="cpfcnpjFuncionarioLbl">
+        <Component class="javax.swing.JLabel" name="cpfFuncionarioLbl">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CPFCNPJ"/>
+            <Property name="text" type="java.lang.String" value="CPF"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nomeFuncionarioTxt">
+        <Component class="javax.swing.JTextField" name="nomeFuncionarioTxtFld">
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="cpfcnpjFuncionarioTxt">
+        <Component class="javax.swing.JFormattedTextField" name="cpfFuncionarioTxtFld">
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="telefoneFuncionarioTxt">
+        <Component class="javax.swing.JFormattedTextField" name="custoHoraFuncionarioTxtFld">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format format="#,##0.00" subtype="-1" type="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="custoHoraFuncionarioTxtFldActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="idFuncionarioTxt">
+        <Component class="javax.swing.JTextField" name="idFuncionarioTxtFld">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idFuncionarioTxtActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idFuncionarioTxtFldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ativoFuncionarioLbl">
@@ -283,6 +290,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaFuncionarioTblMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -291,17 +301,28 @@
             <Property name="text" type="java.lang.String" value="Lista de Funcion&#xe1;rios"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="salvalrFornecedorBtn">
+        <Component class="javax.swing.JButton" name="salvarFuncionarioButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarFuncionarioButtonActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="excluirFornecedorBtn">
+        <Component class="javax.swing.JButton" name="excluirFuncionarioButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Excluir"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excluirFornecedorBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="excluirFuncionarioButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="limparFuncionarioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Limpar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="limparFuncionarioButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

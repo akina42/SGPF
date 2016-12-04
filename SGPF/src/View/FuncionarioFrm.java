@@ -5,18 +5,70 @@
  */
 package View;
 
+import Control.FuncionarioDAO;
+import Model.Funcionario;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author leo
+ * @author akina
  */
 public class FuncionarioFrm extends javax.swing.JFrame {
+    
+    FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 
     /**
      * Creates new form ClienteFrm
      */
     public FuncionarioFrm() {
         initComponents();
+        this.preencheTabela();
     }
+    
+    public void preencheTabela(){
+        List<Funcionario> listFuncionario = funcionarioDAO.obterFuncionarios();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaFuncionarioTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("CPF");
+        dtm.addColumn("Nome do Funcionário");
+        dtm.addColumn("Custo por hora");
+        dtm.addColumn("Ativo");
+        
+        for(Funcionario fn : listFuncionario){
+                dtm.addRow(new Object[] {fn.getIdFuncionario() , fn.getCpfFuncionario(), fn.getNomeFuncionario(), fn.getCustoHora().toString()});
+            }
+    }
+    
+    public void fieldRefresh(){
+        this.idFuncionarioTxtFld.setText("");
+        this.cpfFuncionarioTxtFld.setText("");
+        this.nomeFuncionarioTxtFld.setText("");
+        this.custoHoraFuncionarioTxtFld.setText("");           
+    }
+    
+     public boolean checaVazio(){
+        if(
+        this.cpfFuncionarioTxtFld.getText().equals("")||
+        this.nomeFuncionarioTxtFld.getText().equals("") ||
+        this.custoHoraFuncionarioTxtFld.getText().equals("")){
+        return true;
+    }
+        return false;
+    }
+     
+     
+      public void preencheField(){
+        this.fieldRefresh();
+        Funcionario funcionario = funcionarioDAO.recuperaFuncionario((int) this.listaFuncionarioTbl.getValueAt(this.listaFuncionarioTbl.getSelectedRow(), 0));
+        this.idFuncionarioTxtFld.setText(String.valueOf(funcionario.getIdFuncionario()));
+        this.cpfFuncionarioTxtFld.setText(String.valueOf(funcionario.getCpfFuncionario()));
+        this.nomeFuncionarioTxtFld.setText(funcionario.getNomeFuncionario());
+        this.custoHoraFuncionarioTxtFld.setText(funcionario.getCustoHora().toString());        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,22 +86,23 @@ public class FuncionarioFrm extends javax.swing.JFrame {
         clienteQuery = java.beans.Beans.isDesignTime() ? null : SGPFPUEntityManager.createQuery("SELECT c FROM Cliente c");
         clienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        tituloFuncionarioLbl = new javax.swing.JLabel();
         nomeFuncionarioLbl = new javax.swing.JLabel();
         razaoSocialFuncionarioLbl = new javax.swing.JLabel();
-        cpfcnpjFuncionarioLbl = new javax.swing.JLabel();
-        nomeFuncionarioTxt = new javax.swing.JTextField();
-        cpfcnpjFuncionarioTxt = new javax.swing.JFormattedTextField();
-        telefoneFuncionarioTxt = new javax.swing.JFormattedTextField();
-        idFuncionarioTxt = new javax.swing.JTextField();
+        cpfFuncionarioLbl = new javax.swing.JLabel();
+        nomeFuncionarioTxtFld = new javax.swing.JTextField();
+        cpfFuncionarioTxtFld = new javax.swing.JFormattedTextField();
+        custoHoraFuncionarioTxtFld = new javax.swing.JFormattedTextField();
+        idFuncionarioTxtFld = new javax.swing.JTextField();
         ativoFuncionarioLbl = new javax.swing.JLabel();
         ativoFuncionarioCbx = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaFuncionarioTbl = new javax.swing.JTable();
         titulotabelaFuncionarioLbl = new javax.swing.JLabel();
-        salvalrFornecedorBtn = new javax.swing.JButton();
-        excluirFornecedorBtn = new javax.swing.JButton();
+        salvarFuncionarioButton = new javax.swing.JButton();
+        excluirFuncionarioButton = new javax.swing.JButton();
+        limparFuncionarioButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -79,20 +132,25 @@ public class FuncionarioFrm extends javax.swing.JFrame {
         setTitle("Clientes");
         setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jLabel1.setText("Funcionários");
+        tituloFuncionarioLbl.setText("Funcionários");
 
         nomeFuncionarioLbl.setText("Nome");
 
         razaoSocialFuncionarioLbl.setText("Custo/Hora");
 
-        cpfcnpjFuncionarioLbl.setText("CPFCNPJ");
+        cpfFuncionarioLbl.setText("CPF");
 
-        telefoneFuncionarioTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-
-        idFuncionarioTxt.setEnabled(false);
-        idFuncionarioTxt.addActionListener(new java.awt.event.ActionListener() {
+        custoHoraFuncionarioTxtFld.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        custoHoraFuncionarioTxtFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idFuncionarioTxtActionPerformed(evt);
+                custoHoraFuncionarioTxtFldActionPerformed(evt);
+            }
+        });
+
+        idFuncionarioTxtFld.setEnabled(false);
+        idFuncionarioTxtFld.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idFuncionarioTxtFldActionPerformed(evt);
             }
         });
 
@@ -108,16 +166,33 @@ public class FuncionarioFrm extends javax.swing.JFrame {
 
             }
         ));
+        listaFuncionarioTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaFuncionarioTblMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(listaFuncionarioTbl);
 
         titulotabelaFuncionarioLbl.setText("Lista de Funcionários");
 
-        salvalrFornecedorBtn.setText("Salvar");
-
-        excluirFornecedorBtn.setText("Excluir");
-        excluirFornecedorBtn.addActionListener(new java.awt.event.ActionListener() {
+        salvarFuncionarioButton.setText("Salvar");
+        salvarFuncionarioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                excluirFornecedorBtnActionPerformed(evt);
+                salvarFuncionarioButtonActionPerformed(evt);
+            }
+        });
+
+        excluirFuncionarioButton.setText("Excluir");
+        excluirFuncionarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirFuncionarioButtonActionPerformed(evt);
+            }
+        });
+
+        limparFuncionarioButton.setText("Limpar");
+        limparFuncionarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparFuncionarioButtonActionPerformed(evt);
             }
         });
 
@@ -136,28 +211,30 @@ public class FuncionarioFrm extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(352, 352, 352)
-                                .addComponent(jLabel1)
-                                .addGap(0, 131, Short.MAX_VALUE))
+                                .addComponent(tituloFuncionarioLbl)
+                                .addGap(0, 156, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(razaoSocialFuncionarioLbl)
-                                    .addComponent(nomeFuncionarioLbl))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(ativoFuncionarioLbl)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(razaoSocialFuncionarioLbl)
+                                        .addComponent(nomeFuncionarioLbl)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(idFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(idFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(nomeFuncionarioTxt))
+                                        .addComponent(nomeFuncionarioTxtFld))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ativoFuncionarioCbx)
-                                            .addComponent(telefoneFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(custoHoraFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ativoFuncionarioCbx))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cpfcnpjFuncionarioLbl)
-                        .addGap(56, 56, 56)
-                        .addComponent(cpfcnpjFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addComponent(cpfFuncionarioLbl)
+                        .addGap(18, 18, 18)
+                        .addComponent(cpfFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -165,12 +242,11 @@ public class FuncionarioFrm extends javax.swing.JFrame {
                                 .addComponent(titulotabelaFuncionarioLbl))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(332, 332, 332)
-                                .addComponent(salvalrFornecedorBtn)
+                                .addComponent(salvarFuncionarioButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(excluirFornecedorBtn))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(ativoFuncionarioLbl)))
+                                .addComponent(excluirFuncionarioButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(limparFuncionarioButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -178,27 +254,29 @@ public class FuncionarioFrm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(tituloFuncionarioLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nomeFuncionarioLbl)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(nomeFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cpfcnpjFuncionarioLbl)
-                        .addComponent(cpfcnpjFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(idFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(razaoSocialFuncionarioLbl)
-                    .addComponent(telefoneFuncionarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ativoFuncionarioCbx)
-                    .addComponent(ativoFuncionarioLbl))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nomeFuncionarioLbl)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(nomeFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cpfFuncionarioLbl)
+                                .addComponent(cpfFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(razaoSocialFuncionarioLbl)
+                            .addComponent(custoHoraFuncionarioTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(ativoFuncionarioLbl))
+                    .addComponent(ativoFuncionarioCbx))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(excluirFornecedorBtn)
-                    .addComponent(salvalrFornecedorBtn))
+                    .addComponent(excluirFuncionarioButton)
+                    .addComponent(salvarFuncionarioButton)
+                    .addComponent(limparFuncionarioButton))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -222,13 +300,66 @@ public class FuncionarioFrm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void excluirFornecedorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFornecedorBtnActionPerformed
+    private void excluirFuncionarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFuncionarioButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_excluirFornecedorBtnActionPerformed
+        try{       
+            funcionarioDAO.removerFuncionario(funcionarioDAO.recuperaFuncionario(Integer.parseInt(this.idFuncionarioTxtFld.getText())));
+            this.fieldRefresh();
+            this.preencheTabela();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, ("Selecione um funcionário da tabela " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_excluirFuncionarioButtonActionPerformed
 
-    private void idFuncionarioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFuncionarioTxtActionPerformed
+    private void idFuncionarioTxtFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFuncionarioTxtFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idFuncionarioTxtActionPerformed
+    }//GEN-LAST:event_idFuncionarioTxtFldActionPerformed
+
+    private void limparFuncionarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparFuncionarioButtonActionPerformed
+        // TODO add your handling code here:
+        this.fieldRefresh();
+    }//GEN-LAST:event_limparFuncionarioButtonActionPerformed
+
+    private void custoHoraFuncionarioTxtFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custoHoraFuncionarioTxtFldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_custoHoraFuncionarioTxtFldActionPerformed
+
+    private void salvarFuncionarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarFuncionarioButtonActionPerformed
+        // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(!this.idFuncionarioTxtFld.getText().toString().equals("")){
+            funcionarioDAO.atualizarFuncionario(Integer.parseInt(this.idFuncionarioTxtFld.getText()), 
+                    Integer.parseInt(this.cpfFuncionarioTxtFld.getText()),
+                    this.nomeFuncionarioTxtFld.getText(),
+                    Double.parseDouble(this.custoHoraFuncionarioTxtFld.getText()));
+                    
+                    
+            this.preencheTabela();
+        }else{
+        try{
+            Funcionario funcionario = new Funcionario();
+            
+            funcionario.setCpfFuncionario(Integer.parseInt(this.cpfFuncionarioTxtFld.getText()));
+            funcionario.setNomeFuncionario(this.nomeFuncionarioTxtFld.getText());
+            funcionario.setCustoHora(Double.parseDouble(this.custoHoraFuncionarioTxtFld.getText().replace(",", "."))); 
+                    
+            
+            funcionarioDAO.salvarFuncionario(funcionario);
+            
+            this.fieldRefresh();
+            this.preencheTabela();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO"  , JOptionPane.ERROR_MESSAGE);
+        }
+        }
+    }//GEN-LAST:event_salvarFuncionarioButtonActionPerformed
+
+    private void listaFuncionarioTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaFuncionarioTblMouseClicked
+        // TODO add your handling code here:
+        this.preencheField();
+    }//GEN-LAST:event_listaFuncionarioTblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -274,23 +405,24 @@ public class FuncionarioFrm extends javax.swing.JFrame {
     private javax.swing.JLabel ativoFuncionarioLbl;
     private java.util.List<Model.Cliente> clienteList;
     private javax.persistence.Query clienteQuery;
-    private javax.swing.JLabel cpfcnpjFuncionarioLbl;
-    private javax.swing.JFormattedTextField cpfcnpjFuncionarioTxt;
-    private javax.swing.JButton excluirFornecedorBtn;
-    private javax.swing.JTextField idFuncionarioTxt;
+    private javax.swing.JLabel cpfFuncionarioLbl;
+    private javax.swing.JFormattedTextField cpfFuncionarioTxtFld;
+    private javax.swing.JFormattedTextField custoHoraFuncionarioTxtFld;
+    private javax.swing.JButton excluirFuncionarioButton;
+    private javax.swing.JTextField idFuncionarioTxtFld;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton limparFuncionarioButton;
     private javax.swing.JTable listaFuncionarioTbl;
     private javax.swing.JLabel nomeFuncionarioLbl;
-    private javax.swing.JTextField nomeFuncionarioTxt;
+    private javax.swing.JTextField nomeFuncionarioTxtFld;
     private javax.swing.JLabel razaoSocialFuncionarioLbl;
-    private javax.swing.JButton salvalrFornecedorBtn;
-    private javax.swing.JFormattedTextField telefoneFuncionarioTxt;
+    private javax.swing.JButton salvarFuncionarioButton;
+    private javax.swing.JLabel tituloFuncionarioLbl;
     private javax.swing.JLabel titulotabelaFuncionarioLbl;
     // End of variables declaration//GEN-END:variables
 }

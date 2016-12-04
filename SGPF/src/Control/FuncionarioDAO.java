@@ -5,8 +5,7 @@
  */
 package Control;
 
-import Model.Produto;
-import Model.Unidade;
+import Model.Funcionario;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,40 +17,34 @@ import javax.swing.JOptionPane;
  *
  * @author akina
  */
-public class ProdutoDAO {
+public class FuncionarioDAO {
     
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("SGPFPU");
     EntityManager em = emf.createEntityManager();
     
-    
-    
-    public List obterProdutos(){
-        Query qry = em.createQuery("SELECT p FROM Produto p");
+    public List obterFuncionarios(){
+        Query qry = em.createQuery("SELECT f FROM Funcionario f");
         
-        List<Produto> listaDeProdutos = qry.getResultList();
+        List<Funcionario> listaDeFuncionarios = qry.getResultList();
         
-        return listaDeProdutos;
+        return listaDeFuncionarios;
     }
     
-    
-    
-    public Produto recuperaProduto(int pk){
+    public Funcionario recuperaFuncionario(int pk){
         try{
-            return  em.find(Produto.class, pk);  
+            return  em.find(Funcionario.class, pk);  
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, ("Produto não encontrado " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ("Funcionário não encontrado " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
             return null;
         }   
                 
     }
-        
     
-    
-    public void salvarProduto(Produto produto){
+    public void salvarFuncionario(Funcionario funcionario){
         
         try{
             em.getTransaction().begin();
-            em.persist(produto);
+            em.persist(funcionario);
             em.getTransaction().commit();            
             
         }catch(Exception e){
@@ -62,29 +55,27 @@ public class ProdutoDAO {
         
     }
     
-    
-    public void removerProduto(Produto produto){
+        public void removerFuncionario(Funcionario funcionario){
         try{
             em.getTransaction().begin();
-            em.remove(produto);
+            em.remove(funcionario);
             em.getTransaction().commit();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, ("Erro ao remover: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void atualizarProduto(int pk, String nomeProduto, Double quantidade, Unidade unidade){
-        try{
-            Produto produto = this.recuperaProduto(pk);
-            em.getTransaction().begin();
-            produto.setNomeProduto(nomeProduto);
-            produto.setQuantidade(quantidade);
-            produto.setUnidadeProduto(unidade);
-            
-            em.getTransaction().commit();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, ("Erro ao atualizar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
+        
+    public void atualizarFuncionario(int pk,int cpfFuncionario, String nomeFuncionario, Double custoHora){
+    try{
+        Funcionario funcionario = this.recuperaFuncionario(pk);
+        em.getTransaction().begin();
+        funcionario.setNomeFuncionario(nomeFuncionario);
+        funcionario.setCpfFuncionario(cpfFuncionario);
+        funcionario.setCustoHora(custoHora);
+        em.getTransaction().commit();
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null, ("Erro ao atualizar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
     }
-
+    } 
+    
 }
