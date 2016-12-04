@@ -5,12 +5,8 @@
  */
 package Model;
 
-import View.ClienteFrm;
-import View.FornecedorFrm;
 import View.MainFrm;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
 
 /**
  *
