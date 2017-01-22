@@ -5,19 +5,41 @@
  */
 package View;
 
+import Control.FuncionarioDAO;
+import Model.Funcionario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author leo
  */
-public class FuncionarioAlocacao extends javax.swing.JDialog {
+public class FuncionarioAlocacaoDlg extends javax.swing.JDialog {
 
+    FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+    
     /**
      * Creates new form FuncionarioAlocacao
      */
-    public FuncionarioAlocacao(java.awt.Frame parent, boolean modal) {
+    public FuncionarioAlocacaoDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        preencheTabela();
     }
+    
+public void preencheTabela(){
+
+        List<Funcionario> listFuncionarioProjeto = funcionarioDAO.obterFuncionarios();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.funcionarioAlocacaoTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Nome");
+        dtm.addColumn("Cpf");
+
+    for(Funcionario fu : listFuncionarioProjeto){
+            dtm.addRow(new Object[] {fu.getIdFuncionario() , fu.getNomeFuncionario(), fu.getCpfFuncionario()});
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +70,11 @@ public class FuncionarioAlocacao extends javax.swing.JDialog {
         jScrollPane1.setViewportView(funcionarioAlocacaoTbl);
 
         selecionaFuncionarioBtn.setText("Selecionar Funcionário");
+        selecionaFuncionarioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selecionaFuncionarioBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,6 +98,12 @@ public class FuncionarioAlocacao extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void selecionaFuncionarioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionaFuncionarioBtnActionPerformed
+        // TODO add your handling code here:
+        AlocacaoDlg.funcionario = funcionarioDAO.recuperaFuncionario((int) this.funcionarioAlocacaoTbl.getValueAt(this.funcionarioAlocacaoTbl.getSelectedRow(),0));
+        this.dispose();
+    }//GEN-LAST:event_selecionaFuncionarioBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -88,20 +121,21 @@ public class FuncionarioAlocacao extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FuncionarioAlocacao dialog = new FuncionarioAlocacao(new javax.swing.JFrame(), true);
+                FuncionarioAlocacaoDlg dialog = new FuncionarioAlocacaoDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

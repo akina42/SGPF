@@ -5,19 +5,95 @@
  */
 package View;
 
+import Control.AlocacoesDAO;
+import Model.Alocacao;
+import Model.CalculadoraAlocacao;
+import Model.Funcionario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author leo
  */
 public class AlocacaoDlg extends javax.swing.JDialog {
+    
+    public AlocacoesDAO alocacoesDAO = new AlocacoesDAO();
+    public static Funcionario funcionario;
+    private int idPj;
 
     /**
      * Creates new form AlocacaoDlg
      */
-    public AlocacaoDlg(java.awt.Frame parent, boolean modal) {
+    public AlocacaoDlg(java.awt.Frame parent, boolean modal, int idProjeto) {
         super(parent, modal);
+        this.idPj = idProjeto;
         initComponents();
+        preencheTabela();
     }
+    
+    public void fieldRefresh(){
+        this.nomeAlocacaoTxtFld.setText("");
+        this.custoUnidadeTxtFld.setText("");
+        this.unidadeTxt.setText("");
+        this.quantidadeTxt.setText("");
+        this.custoAlocacaoTxtFld.setText("");
+    }
+    
+    public void preencheTabela(){
+        List<Alocacao> listAlocacao = alocacoesDAO.obterAlocacoesProjeto(idPj);
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaAlocacoesTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Tipo");
+        dtm.addColumn("Quantidade");
+        dtm.addColumn("Custo");
+        
+        for(Alocacao al : listAlocacao){
+                dtm.addRow(new Object[] {al.getIdAlocacao(), "", al.getQuantidadeAlocacao(), al.getCustoTotalAlocacoes()});
+            }
+    }
+    
+public boolean checaVazio(){
+        if(
+        this.nomeAlocacaoTxtFld.toString().equals("")||
+        this.custoUnidadeTxtFld.toString().equals("") ||
+        this.unidadeTxt.getText().equals("") ||
+        this.quantidadeTxt.toString().equals(""))
+        {
+        return true;
+    }
+        return false;
+    }
+
+public String obterTipo(){
+        return this.tipoAlocacaoCbx.getSelectedItem().toString();
+    }
+
+/*
+public void preencheField(){
+        this.fieldRefresh();
+        Alocacao alocacao = alocacoesDAO.recuperaAlocacao((int) this.listaAlocacoesTbl.getValueAt(this.listaAlocacoesTbl.getSelectedRow(), 0));
+        this.nomeAlocacaoTxtFld.setText(alocacao.get);
+        this.idProjetoTxtFld.setText(String.valueOf(projeto.getIdProjeto()));
+        this.nomeProjetoTxtFld.setText(projeto.getNomeProjeto());
+        this.clienteProjetoTxtFld.setText(projeto.getClienteProjeto().getNomeFantasia());
+        this.descricaoProjetoTxtArea.setText(projeto.getDescricaoProjeto());
+        this.margemDeLucroProjetoTxtFld.setText(String.valueOf(projeto.getMargemDeLucroProjeto()));
+        this.precoFinalProjetoTxtFld.setText(String.valueOf(projeto.getPrecoFinalProjeto()));
+        this.custoProjetoTxtFld.setText(String.valueOf(projeto.getCustoProjeto()));
+        EstadoProjeto und = projeto.getEstadoProjeto();
+        switch(und){
+            case EM_ANDAMENTO: this.estadoProjetoCbox.setSelectedIndex(0);
+            break;
+            case CANCELADO: this.estadoProjetoCbox.setSelectedIndex(1);
+            break;
+            case CONCLUIDO: this.estadoProjetoCbox.setSelectedIndex(1);
+            break;
+        }
+    }*/
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +124,7 @@ public class AlocacaoDlg extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaAlocacoesTbl = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        calcularAlocacoesBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -63,12 +140,23 @@ public class AlocacaoDlg extends javax.swing.JDialog {
         nomeAlocacaoLbl.setText("Tipo");
 
         selecionaAlocacaoBtn.setText("jButton1");
+        selecionaAlocacaoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selecionaAlocacaoBtnActionPerformed(evt);
+            }
+        });
 
         nomeAlocacaoTxtFld.setEditable(false);
 
         custoUnitarioLbl.setText("Custo por Unidade");
 
         quantidadeLbl.setText("Quantidade");
+
+        quantidadeTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                quantidadeTxtKeyTyped(evt);
+            }
+        });
 
         unidadeLbl.setText("Unidade");
 
@@ -116,6 +204,13 @@ public class AlocacaoDlg extends javax.swing.JDialog {
 
         jLabel1.setText("Lista de Alocações");
 
+        calcularAlocacoesBtn.setText("Calcular Custo");
+        calcularAlocacoesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calcularAlocacoesBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,6 +224,9 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(349, 349, 349)
                         .addComponent(tituloAlocacaoLbl))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(331, 331, 331)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -146,33 +244,28 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                                 .addComponent(custoUnitarioLbl)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(custoUnidadeTxtFld)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(nomeAlocacaoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
+                                .addComponent(calcularAlocacoesBtn)
+                                .addGap(214, 214, 214)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(unidadeLbl)
                                         .addGap(32, 32, 32)
                                         .addComponent(unidadeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(ExcluirAlocacaoBtn)
-                                            .addComponent(custoAlocacaoTxt))
+                                        .addComponent(custoAlocacaoTxt)
                                         .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(custoAlocacaoTxtFld)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(LimparAlocacaoBtn))))))))
+                                        .addComponent(custoAlocacaoTxtFld))))
+                            .addComponent(nomeAlocacaoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addComponent(salvarAlocacaoBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(331, 331, 331)
-                        .addComponent(jLabel1)))
+                        .addGap(270, 270, 270)
+                        .addComponent(salvarAlocacaoBtn)
+                        .addGap(21, 21, 21)
+                        .addComponent(ExcluirAlocacaoBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(LimparAlocacaoBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -192,18 +285,19 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                     .addComponent(unidadeLbl)
                     .addComponent(unidadeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(custoUnidadeTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quantidadeLbl)
                     .addComponent(quantidadeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(custoAlocacaoTxt)
-                    .addComponent(custoAlocacaoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(custoAlocacaoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(calcularAlocacoesBtn))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarAlocacaoBtn)
                     .addComponent(ExcluirAlocacaoBtn)
                     .addComponent(LimparAlocacaoBtn))
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,6 +323,28 @@ public class AlocacaoDlg extends javax.swing.JDialog {
     private void custoAlocacaoTxtFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custoAlocacaoTxtFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_custoAlocacaoTxtFldActionPerformed
+
+    private void selecionaAlocacaoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionaAlocacaoBtnActionPerformed
+        // TODO add your handling code here:
+        if(this.obterTipo().equals("Funcionário")){
+            new FuncionarioAlocacaoDlg(null,true).setVisible(true);
+            this.nomeAlocacaoTxtFld.setText(funcionario.getNomeFuncionario());
+            this.custoUnidadeTxtFld.setText(String.valueOf(funcionario.getCustoHora()));
+            this.unidadeTxt.setText("HORA");
+            
+        }
+    }//GEN-LAST:event_selecionaAlocacaoBtnActionPerformed
+
+    private void quantidadeTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantidadeTxtKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantidadeTxtKeyTyped
+
+    private void calcularAlocacoesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularAlocacoesBtnActionPerformed
+        // TODO add your handling code here:
+        CalculadoraAlocacao calc = new CalculadoraAlocacao();
+        Double custo = calc.caclulaPrecoAlocacao(Double.parseDouble(this.custoUnidadeTxtFld.getText()), Double.parseDouble(this.quantidadeTxt.getText()));
+        this.custoAlocacaoTxtFld.setText(String.valueOf(custo));
+    }//GEN-LAST:event_calcularAlocacoesBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,7 +376,7 @@ public class AlocacaoDlg extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AlocacaoDlg dialog = new AlocacaoDlg(new javax.swing.JFrame(), true);
+                AlocacaoDlg dialog = new AlocacaoDlg(new javax.swing.JFrame(), true,1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -275,6 +391,7 @@ public class AlocacaoDlg extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ExcluirAlocacaoBtn;
     private javax.swing.JButton LimparAlocacaoBtn;
+    private javax.swing.JButton calcularAlocacoesBtn;
     private javax.swing.JLabel custoAlocacaoTxt;
     private javax.swing.JFormattedTextField custoAlocacaoTxtFld;
     private javax.swing.JFormattedTextField custoUnidadeTxtFld;

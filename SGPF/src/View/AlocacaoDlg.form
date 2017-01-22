@@ -35,6 +35,10 @@
                       <Component id="tituloAlocacaoLbl" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
@@ -55,13 +59,11 @@
                               <Component id="custoUnidadeTxtFld" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="nomeAlocacaoTxtFld" min="-2" pref="486" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="calcularAlocacoesBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="unidadeLbl" min="-2" max="-2" attributes="0"/>
@@ -69,30 +71,22 @@
                                       <Component id="unidadeTxt" min="-2" pref="134" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="ExcluirAlocacaoBtn" min="-2" max="-2" attributes="0"/>
-                                          <Component id="custoAlocacaoTxt" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="custoAlocacaoTxt" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="custoAlocacaoTxtFld" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                              <Component id="LimparAlocacaoBtn" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="custoAlocacaoTxtFld" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
+                          <Component id="nomeAlocacaoTxtFld" min="-2" pref="486" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="270" max="-2" attributes="0"/>
                       <Component id="salvarAlocacaoBtn" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Component id="ExcluirAlocacaoBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="LimparAlocacaoBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -118,20 +112,21 @@
                   <Component id="unidadeTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="custoUnidadeTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="quantidadeLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="quantidadeTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="custoAlocacaoTxt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="custoAlocacaoTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="calcularAlocacoesBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="salvarAlocacaoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ExcluirAlocacaoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LimparAlocacaoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -174,6 +169,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selecionaAlocacaoBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="nomeAlocacaoTxtFld">
       <Properties>
@@ -191,6 +189,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="quantidadeTxt">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantidadeTxtKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="unidadeLbl">
       <Properties>
@@ -268,6 +269,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Lista de Aloca&#xe7;&#xf5;es"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="calcularAlocacoesBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Calcular Custo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calcularAlocacoesBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
