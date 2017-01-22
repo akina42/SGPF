@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ALOCACAO")
-public class Alocacao {
+public abstract class Alocacao {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -40,9 +40,6 @@ public class Alocacao {
         return idAlocacao;
     }
 
-    public void setIdAlocacao(int idAlocacao) {
-        this.idAlocacao = idAlocacao;
-    }
 
     public Projeto getProjetoAlocacao() {
         return projetoAlocacao;
@@ -75,7 +72,6 @@ public class Alocacao {
     public void setQuantidadeAlocacao(Double quantidadeAlocacao) {
         this.quantidadeAlocacao = quantidadeAlocacao;
     }
-    
     
     
 }
