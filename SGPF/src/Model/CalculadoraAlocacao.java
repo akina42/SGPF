@@ -11,7 +11,7 @@ package Model;
  */
 public class CalculadoraAlocacao {
     
-    public Double caclulaPrecoAlocacao(Double qtd, Double custo){
+    public Double calculaPrecoAlocacao(Double qtd, Double custo){
      return qtd * custo;   
     }
     
