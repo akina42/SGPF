@@ -7,6 +7,7 @@ package View;
 
 import Control.ProjetoDAO;
 import Model.Alocacao;
+import Model.CalculadoraProjeto;
 import Model.Cliente;
 import Model.EstadoProjeto;
 import Model.Projeto;
@@ -139,6 +140,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         AlocacaoBtn = new javax.swing.JButton();
         idProjetoTxtFld = new javax.swing.JTextField();
+        calculaPrecoBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -226,6 +228,13 @@ public class ProjetoFrm extends javax.swing.JFrame {
 
         idProjetoTxtFld.setEnabled(false);
 
+        calculaPrecoBtn.setText("Calc");
+        calculaPrecoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculaPrecoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -256,19 +265,21 @@ public class ProjetoFrm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(estadoProjetoCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(48, 48, 48)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(custoProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(margemDeLucroProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(calculaPrecoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
                                     .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                    .addGap(18, 18, 18)
                                     .addComponent(precoFinalProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(descricaoProjetoTxtBox)
+                                .addComponent(descricaoProjetoTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(selecionaClienteProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,7 +314,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
                     .addComponent(descricaoProjetoTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(AlocacaoBtn)
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(estadoProjetoCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
@@ -312,8 +323,9 @@ public class ProjetoFrm extends javax.swing.JFrame {
                     .addComponent(precoFinalProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(custoProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addComponent(calculaPrecoBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -329,7 +341,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,6 +399,13 @@ public class ProjetoFrm extends javax.swing.JFrame {
         this.preencheField();
     }//GEN-LAST:event_listaProjetoTblMouseClicked
 
+    private void calculaPrecoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculaPrecoBtnActionPerformed
+        // TODO add your handling code here:
+        CalculadoraProjeto calc = new CalculadoraProjeto();
+        Double preco = calc.calculaPrecoProjeto(Double.parseDouble(this.custoProjetoTxtFld.getText()), Double.parseDouble(this.margemDeLucroProjetoTxtFld.getText()));
+        this.precoFinalProjetoTxtFld.setText(String.valueOf(preco));
+    }//GEN-LAST:event_calculaPrecoBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -424,6 +443,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AlocacaoBtn;
+    private javax.swing.JButton calculaPrecoBtn;
     private javax.swing.JTextField clienteProjetoTxtFld;
     private javax.swing.JFormattedTextField custoProjetoTxtFld;
     private javax.swing.JTextArea descricaoProjetoTxtArea;
