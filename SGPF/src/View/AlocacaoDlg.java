@@ -6,10 +6,14 @@
 package View;
 
 import Control.AlocacoesDAO;
+import Control.ProjetoDAO;
 import Model.Alocacao;
+import Model.AlocacaoFuncionario;
 import Model.CalculadoraAlocacao;
 import Model.Funcionario;
+import Model.Unidade;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class AlocacaoDlg extends javax.swing.JDialog {
     
     public AlocacoesDAO alocacoesDAO = new AlocacoesDAO();
+    public ProjetoDAO projetoDAO = new ProjetoDAO();
     public static Funcionario funcionario;
     private int idPj;
 
@@ -184,6 +189,11 @@ public void preencheField(){
         });
 
         salvarAlocacaoBtn.setText("Salvar");
+        salvarAlocacaoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarAlocacaoBtnActionPerformed(evt);
+            }
+        });
 
         ExcluirAlocacaoBtn.setText("Excluir");
 
@@ -342,9 +352,30 @@ public void preencheField(){
     private void calcularAlocacoesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularAlocacoesBtnActionPerformed
         // TODO add your handling code here:
         CalculadoraAlocacao calc = new CalculadoraAlocacao();
-        Double custo = calc.caclulaPrecoAlocacao(Double.parseDouble(this.custoUnidadeTxtFld.getText()), Double.parseDouble(this.quantidadeTxt.getText()));
+        Double custo = calc.calculaPrecoAlocacao(Double.parseDouble(this.custoUnidadeTxtFld.getText()), Double.parseDouble(this.quantidadeTxt.getText()));
         this.custoAlocacaoTxtFld.setText(String.valueOf(custo));
     }//GEN-LAST:event_calcularAlocacoesBtnActionPerformed
+
+    private void salvarAlocacaoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarAlocacaoBtnActionPerformed
+        // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(this.obterTipo().equals("Funcionário")){
+            AlocacaoFuncionario alocF = new AlocacaoFuncionario();
+            alocF.setCustoTotalAlocacoes(Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            alocF.setFuncionarioAlocacao(this.funcionario);
+            alocF.setNomeFuncionarioAlocacao(this.funcionario.getNomeFuncionario());
+            alocF.setProjetoAlocacao(projetoDAO.recuperaProjeto(idPj));
+            alocF.setQuantidadeAlocacao(Double.parseDouble(this.quantidadeTxt.getText()));
+            alocF.setUnidadeAlocacao(Unidade.HORA);
+            
+            alocacoesDAO.salvarAlocacao(alocF);
+            projetoDAO.atualizarCustoProjeto(idPj, Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            
+            fieldRefresh();
+            this.preencheTabela();
+        }
+    }//GEN-LAST:event_salvarAlocacaoBtnActionPerformed
 
     /**
      * @param args the command line arguments

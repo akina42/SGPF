@@ -408,6 +408,7 @@ public class ClienteFrm extends javax.swing.JFrame {
             
             clienteDAO.salvarCliente(cliente);
             
+            
             this.fieldRefresh();
             this.preencheTabela();
             

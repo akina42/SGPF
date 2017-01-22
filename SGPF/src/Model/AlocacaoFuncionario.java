@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("FUNCIONARIO")
 public class AlocacaoFuncionario extends Alocacao{
     
-    @Column(length = 100, name = "FUNCIONARIO", nullable = false)
+    @Column(length = 100, name = "FUNCIONARIO", nullable = true)
     private String nomeFuncionarioAlocacao;
 
     public String getNomeFuncionarioAlocacao() {

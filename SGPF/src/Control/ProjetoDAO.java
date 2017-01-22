@@ -64,18 +64,16 @@ public class ProjetoDAO {
             JOptionPane.showMessageDialog(null, ("Erro ao remover: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
-   /* 
-        public void atualizarProduto(int pk, String nomeProduto, Double quantidade, Unidade unidade){
+    
+        public void atualizarCustoProjeto(int pk,Double novoCusto){
         try{
-            Produto produto = this.recuperaProduto(pk);
+            Projeto projeto = this.recuperaProjeto(pk);
             em.getTransaction().begin();
-            produto.setNomeProduto(nomeProduto);
-            produto.setQuantidade(quantidade);
-            produto.setUnidadeProduto(unidade);
-            
+            Double custoAntigo = projeto.getCustoProjeto();
+            projeto.setCustoProjeto(novoCusto + custoAntigo);            
             em.getTransaction().commit();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, ("Erro ao atualizar: " + e.getMessage()), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
 }

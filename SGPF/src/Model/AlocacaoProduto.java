@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("PRODUTO")
 public class AlocacaoProduto extends Alocacao{
 
-    @Column(length = 100, name = "PRODUTO", nullable = false)    
+    @Column(length = 100, name = "PRODUTO", nullable = true)    
     private String nomeProdutoAlocacao;
 
     public String getNomeProdutoAlocacao() {

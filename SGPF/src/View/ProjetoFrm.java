@@ -53,7 +53,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
         dtm.addColumn("Custo");
         
         for(Projeto pj : listProjeto){
-                dtm.addRow(new Object[] {pj.getIdProjeto(), pj.getNomeProjeto() , pj.getMargemDeLucroProjeto(), pj.getPrecoFinalProjeto()});
+                dtm.addRow(new Object[] {pj.getIdProjeto(), pj.getNomeProjeto() , pj.getMargemDeLucroProjeto(), pj.getCustoProjeto()});
             }
     }
     
@@ -357,6 +357,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
     private void AlocacaoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlocacaoBtnActionPerformed
         // TODO add your handling code here:
         new AlocacaoDlg(this, true, Integer.valueOf(this.idProjetoTxtFld.getText())).setVisible(true);
+        preencheTabela();
     }//GEN-LAST:event_AlocacaoBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
