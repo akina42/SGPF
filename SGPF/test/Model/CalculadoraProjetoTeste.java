@@ -19,10 +19,16 @@ public class CalculadoraProjetoTeste {
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("\nTestes unitários da classe CalculadoraProjeto\nDesenvolvedor: Leonardo P. Guerra\nExecutor dos Testes: Leonardo P. Guerra\n");
+        System.out.println("--------------------------------------------------------------------------");
     }
     
     @AfterClass
     public static void tearDownClass() {
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("\nTérmino dos testes unitários da classe CalculadoraProjeto.\n");
+        System.out.println("--------------------------------------------------------------------------");
     }
     
     @Before
