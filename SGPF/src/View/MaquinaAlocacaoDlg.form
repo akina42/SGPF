@@ -68,6 +68,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Selecionar M&#xe1;quina"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selecionaMaquinaBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

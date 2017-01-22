@@ -5,19 +5,41 @@
  */
 package View;
 
+import Control.MaquinaDAO;
+import Model.Maquina;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author leo
  */
-public class ProdutoAlocacao extends javax.swing.JDialog {
+public class MaquinaAlocacaoDlg extends javax.swing.JDialog {
+    
+    MaquinaDAO maquinaDAO = new MaquinaDAO();
 
     /**
-     * Creates new form ProdutoAlocacao
+     * Creates new form MaquinaAlocacao
      */
-    public ProdutoAlocacao(java.awt.Frame parent, boolean modal) {
+    public MaquinaAlocacaoDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        preencheTabela();
     }
+    
+public void preencheTabela(){
+
+        List<Maquina> listaMaquinaProjeto = maquinaDAO.obterMaquinas();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.MaquinaAlocacaoTbl.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Nome");
+        dtm.addColumn("Custo");
+
+    for(Maquina mq : listaMaquinaProjeto){
+            dtm.addRow(new Object[] {mq.getIdMaquina(), mq.getNomeMaquina() , mq.getCustoHora()});
+        }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,12 +51,12 @@ public class ProdutoAlocacao extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        produtoAlocacaoTbl = new javax.swing.JTable();
-        selecionaProdutoBtn = new javax.swing.JButton();
+        MaquinaAlocacaoTbl = new javax.swing.JTable();
+        selecionaMaquinaBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        produtoAlocacaoTbl.setModel(new javax.swing.table.DefaultTableModel(
+        MaquinaAlocacaoTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -45,9 +67,14 @@ public class ProdutoAlocacao extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(produtoAlocacaoTbl);
+        jScrollPane1.setViewportView(MaquinaAlocacaoTbl);
 
-        selecionaProdutoBtn.setText("Selecionar Produto");
+        selecionaMaquinaBtn.setText("Selecionar Máquina");
+        selecionaMaquinaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selecionaMaquinaBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,21 +82,27 @@ public class ProdutoAlocacao extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(selecionaProdutoBtn)
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addGap(134, 134, 134)
+                .addComponent(selecionaMaquinaBtn)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(selecionaProdutoBtn)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selecionaMaquinaBtn)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void selecionaMaquinaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionaMaquinaBtnActionPerformed
+        // TODO add your handling code here:
+        AlocacaoDlg.maquina = maquinaDAO.recuperaMaquina((int) this.MaquinaAlocacaoTbl.getValueAt(this.MaquinaAlocacaoTbl.getSelectedRow(), 0));
+        this.dispose();
+    }//GEN-LAST:event_selecionaMaquinaBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,20 +121,21 @@ public class ProdutoAlocacao extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProdutoAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaquinaAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProdutoAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaquinaAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProdutoAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaquinaAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProdutoAlocacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MaquinaAlocacaoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ProdutoAlocacao dialog = new ProdutoAlocacao(new javax.swing.JFrame(), true);
+                MaquinaAlocacaoDlg dialog = new MaquinaAlocacaoDlg(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -114,8 +148,8 @@ public class ProdutoAlocacao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable MaquinaAlocacaoTbl;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable produtoAlocacaoTbl;
-    private javax.swing.JButton selecionaProdutoBtn;
+    private javax.swing.JButton selecionaMaquinaBtn;
     // End of variables declaration//GEN-END:variables
 }

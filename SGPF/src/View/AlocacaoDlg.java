@@ -9,8 +9,12 @@ import Control.AlocacoesDAO;
 import Control.ProjetoDAO;
 import Model.Alocacao;
 import Model.AlocacaoFuncionario;
+import Model.AlocacaoMaquina;
+import Model.AlocacaoProduto;
 import Model.CalculadoraAlocacao;
 import Model.Funcionario;
+import Model.Maquina;
+import Model.Produto;
 import Model.Unidade;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,6 +29,8 @@ public class AlocacaoDlg extends javax.swing.JDialog {
     public AlocacoesDAO alocacoesDAO = new AlocacoesDAO();
     public ProjetoDAO projetoDAO = new ProjetoDAO();
     public static Funcionario funcionario;
+    public static Maquina maquina;
+    public static Produto produto;
     private int idPj;
 
     /**
@@ -342,6 +348,17 @@ public void preencheField(){
             this.custoUnidadeTxtFld.setText(String.valueOf(funcionario.getCustoHora()));
             this.unidadeTxt.setText("HORA");
             
+        }else if(this.obterTipo().equals("Máquina")){
+            new MaquinaAlocacaoDlg(null,true).setVisible(true);
+            this.nomeAlocacaoTxtFld.setText(maquina.getNomeMaquina());
+            this.custoUnidadeTxtFld.setText(String.valueOf(maquina.getCustoHora()));
+            this.unidadeTxt.setText("HORA");
+        }else{
+            new ProdutoAlocacaoDlg(null,true).setVisible(true);
+            this.nomeAlocacaoTxtFld.setText(produto.getNomeProduto());
+            this.custoUnidadeTxtFld.setEditable(true);
+            this.unidadeTxt.setText(produto.getUnidadeProduto().toString());
+            
         }
     }//GEN-LAST:event_selecionaAlocacaoBtnActionPerformed
 
@@ -373,7 +390,35 @@ public void preencheField(){
             projetoDAO.atualizarCustoProjeto(idPj, Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
             
             fieldRefresh();
-            this.preencheTabela();
+            preencheTabela();
+        }else if(this.obterTipo().equals("Máquina")){
+            AlocacaoMaquina alocM = new AlocacaoMaquina();
+            alocM.setCustoTotalAlocacoes(Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            alocM.setMaquinaAlocacao(this.maquina);
+            alocM.setNomeMaquinaAlocacao(this.maquina.getNomeMaquina());
+            alocM.setProjetoAlocacao(projetoDAO.recuperaProjeto(idPj));
+            alocM.setQuantidadeAlocacao(Double.parseDouble(this.quantidadeTxt.getText()));
+            alocM.setUnidadeAlocacao(Unidade.HORA);
+            
+            alocacoesDAO.salvarAlocacao(alocM);
+            projetoDAO.atualizarCustoProjeto(idPj, Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            
+            fieldRefresh();
+            preencheTabela();
+        }else{
+            AlocacaoProduto alocP = new AlocacaoProduto();
+            alocP.setCustoTotalAlocacoes(Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            alocP.setNomeProdutoAlocacao(produto.getNomeProduto());
+            alocP.setProdutoAlocacao(produto);
+            alocP.setProjetoAlocacao(projetoDAO.recuperaProjeto(idPj));
+            alocP.setQuantidadeAlocacao(Double.parseDouble(this.quantidadeTxt.getText()));
+            alocP.setUnidadeAlocacao(produto.getUnidadeProduto());
+            
+            alocacoesDAO.salvarAlocacao(alocP);
+            projetoDAO.atualizarCustoProjeto(idPj, Double.parseDouble(this.custoAlocacaoTxtFld.getText()));
+            
+            fieldRefresh();
+            preencheTabela();
         }
     }//GEN-LAST:event_salvarAlocacaoBtnActionPerformed
 
