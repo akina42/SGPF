@@ -11,6 +11,11 @@ package Model;
  */
 public class CalculadoraProjeto {
     public Double calculaPrecoProjeto(Double custo, Double margem){
-     return custo * margem;   
+        if(margem == 0){
+            return custo;
+        }
+        else{
+           return ((custo * (margem/100))+ custo);  
+        }       
     }
 }

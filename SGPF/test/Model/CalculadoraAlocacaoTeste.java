@@ -35,7 +35,7 @@ public class CalculadoraAlocacaoTeste {
 
     
     @Test
-    public void testeCalculaPrecoAlocacaoInteiro() {
+    public void testeCalculaPrecoAlocacaoZerados() {
         System.out.println("\nTeste do método calculaPrecoAlocacao - Teste com valores zerados");
         System.out.println("\nVariáveis e Dados de Entrada:\nQuantidade = 0\nCusto = 0");
         System.out.println("\nResultado Esperado:\nCusto da Alocação = 0\n");

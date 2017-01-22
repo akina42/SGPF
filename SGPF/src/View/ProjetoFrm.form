@@ -85,7 +85,7 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="precoFinalProjetoTxtFld" min="-2" pref="132" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="descricaoProjetoTxtBox" pref="799" max="32767" attributes="0"/>
+                                  <Component id="descricaoProjetoTxtBox" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="selecionaClienteProjeto" min="-2" pref="31" max="-2" attributes="0"/>
@@ -181,7 +181,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Margem de Lucro"/>
+            <Property name="text" type="java.lang.String" value="Margem de Lucro (%)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

@@ -152,7 +152,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
 
         jLabel4.setText("Descrição");
 
-        jLabel5.setText("Margem de Lucro");
+        jLabel5.setText("Margem de Lucro (%)");
 
         jLabel6.setText("Preço Final");
 
@@ -279,7 +279,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
                                     .addComponent(precoFinalProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(descricaoProjetoTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+                                .addComponent(descricaoProjetoTxtBox)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(selecionaClienteProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
