@@ -5,12 +5,31 @@
  */
 package Model;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author leo
  */
+@Entity
+@DiscriminatorValue("MAQUINA")
 public class AlocacaoMaquina extends Alocacao {
     
+    @Column(length = 100, name = "MAQUINA", nullable = false)
+    private String nomeMaquinaAlocacao;
+
+    public String getNomeMaquinaAlocacao() {
+        return nomeMaquinaAlocacao;
+    }
+
+    public void setNomeMaquinaAlocacao(String nomeMaquinaAlocacao) {
+        this.nomeMaquinaAlocacao = nomeMaquinaAlocacao;
+    }
+    
+    @OneToOne
     private Maquina maquinaAlocacao;    
     
 

@@ -46,7 +46,8 @@ public class AlocacaoDlg extends javax.swing.JDialog {
         ExcluirAlocacaoBtn = new javax.swing.JButton();
         LimparAlocacaoBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listaAlocacoesTbl = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,7 +101,7 @@ public class AlocacaoDlg extends javax.swing.JDialog {
 
         LimparAlocacaoBtn.setText("Limpar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        listaAlocacoesTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -111,7 +112,9 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(listaAlocacoesTbl);
+
+        jLabel1.setText("Lista de Alocações");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,7 +169,10 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                                                 .addComponent(LimparAlocacaoBtn))))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(193, 193, 193)
-                        .addComponent(salvarAlocacaoBtn)))
+                        .addComponent(salvarAlocacaoBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(331, 331, 331)
+                        .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,7 +203,9 @@ public class AlocacaoDlg extends javax.swing.JDialog {
                     .addComponent(salvarAlocacaoBtn)
                     .addComponent(ExcluirAlocacaoBtn)
                     .addComponent(LimparAlocacaoBtn))
-                .addGap(34, 34, 34)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -271,9 +279,10 @@ public class AlocacaoDlg extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField custoAlocacaoTxtFld;
     private javax.swing.JFormattedTextField custoUnidadeTxtFld;
     private javax.swing.JLabel custoUnitarioLbl;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable listaAlocacoesTbl;
     private javax.swing.JLabel nomeAlocacaoLbl;
     private javax.swing.JTextField nomeAlocacaoTxtFld;
     private javax.swing.JLabel quantidadeLbl;

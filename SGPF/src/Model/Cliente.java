@@ -26,8 +26,8 @@ public class Cliente extends Pessoa implements Serializable{
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     
 
-    @OneToMany(orphanRemoval = true)
-    @JoinTable(name="PROJETO", joinColumns={@JoinColumn(name="idProjeto", referencedColumnName="ID")})
+    @OneToMany //(orphanRemoval = true)
+    //@JoinTable(name="PROJETO", joinColumns={@JoinColumn(name="idProjeto", referencedColumnName="ID")})
     private List<Projeto> listaProjetosCliente;
 
     public Cliente() {
