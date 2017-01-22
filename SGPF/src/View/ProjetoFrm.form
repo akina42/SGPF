@@ -85,11 +85,16 @@
                                   </Group>
                                   <Component id="descricaoProjetoTxtBox" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="selecionaClienteProjeto" min="-2" pref="31" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="clienteProjetoTxtFld" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="selecionaClienteProjeto" min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Component id="idProjetoTxtFld" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="nomeProjetoTxtFld" max="32767" attributes="0"/>
+                                          <Component id="clienteProjetoTxtFld" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <Component id="nomeProjetoTxtFld" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -111,6 +116,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="nomeProjetoTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="idProjetoTxtFld" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -208,6 +214,9 @@
         <Component class="javax.swing.JFormattedTextField" name="margemDeLucroProjetoTxtFld">
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="precoFinalProjetoTxtFld">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="selecionaClienteProjeto">
           <Properties>
@@ -235,6 +244,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProjetoTblMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -242,6 +254,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">
           <Properties>
@@ -276,6 +291,9 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="custoProjetoTxtFld">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -289,6 +307,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlocacaoBtnActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="idProjetoTxtFld">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

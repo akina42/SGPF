@@ -6,10 +6,13 @@
 package View;
 
 import Control.ProjetoDAO;
+import Model.Alocacao;
 import Model.Cliente;
 import Model.EstadoProjeto;
 import Model.Projeto;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +34,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
 
     
     public void fieldRefresh(){
+        this.idProjetoTxtFld.setText("");
         this.nomeProjetoTxtFld.setText("");
         this.clienteProjetoTxtFld.setText("");
         this.descricaoProjetoTxtArea.setText("");
@@ -55,12 +59,12 @@ public class ProjetoFrm extends javax.swing.JFrame {
     
     public boolean checaVazio(){
         if(
+        this.idProjetoTxtFld.toString().equals("")||
         this.nomeProjetoTxtFld.getText().equals("") ||
         this.clienteProjetoTxtFld.getText().equals("") ||
         this.descricaoProjetoTxtArea.getText().equals("") ||
-        this.margemDeLucroProjetoTxtFld.getText().equals("") ||
-        this.precoFinalProjetoTxtFld.getText().equals("") ||
-        this.custoProjetoTxtFld.getText().equals("")){
+        this.margemDeLucroProjetoTxtFld.toString().equals(""))
+        {
         return true;
     }
         return false;
@@ -69,11 +73,13 @@ public class ProjetoFrm extends javax.swing.JFrame {
     public void preencheField(){
         this.fieldRefresh();
         Projeto projeto = projetoDAO.recuperaProjeto((int) this.listaProjetoTbl.getValueAt(this.listaProjetoTbl.getSelectedRow(), 0));
+        this.idProjetoTxtFld.setText(String.valueOf(projeto.getIdProjeto()));
         this.nomeProjetoTxtFld.setText(projeto.getNomeProjeto());
         this.clienteProjetoTxtFld.setText(projeto.getClienteProjeto().getNomeFantasia());
         this.descricaoProjetoTxtArea.setText(projeto.getDescricaoProjeto());
         this.margemDeLucroProjetoTxtFld.setText(String.valueOf(projeto.getMargemDeLucroProjeto()));
         this.precoFinalProjetoTxtFld.setText(String.valueOf(projeto.getPrecoFinalProjeto()));
+        this.custoProjetoTxtFld.setText(String.valueOf(projeto.getCustoProjeto()));
         EstadoProjeto und = projeto.getEstadoProjeto();
         switch(und){
             case EM_ANDAMENTO: this.estadoProjetoCbox.setSelectedIndex(0);
@@ -85,7 +91,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
         }
     }
     
-    public EstadoProjeto obterUnidade(){
+    public EstadoProjeto obterEstado(){
         String opcao = this.estadoProjetoCbox.getSelectedItem().toString();
         if (opcao.equals("EM ANDAMENTO")){
             return EstadoProjeto.EM_ANDAMENTO;
@@ -94,7 +100,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
             return EstadoProjeto.CANCELADO;
         }
         else{
-            return EstadoProjeto.CANCELADO;
+            return EstadoProjeto.EM_ANDAMENTO;
         }
     }
 
@@ -132,6 +138,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
         custoProjetoTxtFld = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         AlocacaoBtn = new javax.swing.JButton();
+        idProjetoTxtFld = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -159,6 +166,8 @@ public class ProjetoFrm extends javax.swing.JFrame {
         descricaoProjetoTxtArea.setRows(5);
         descricaoProjetoTxtBox.setViewportView(descricaoProjetoTxtArea);
 
+        precoFinalProjetoTxtFld.setEnabled(false);
+
         selecionaClienteProjeto.setText("jButton1");
         selecionaClienteProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,9 +186,19 @@ public class ProjetoFrm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        listaProjetoTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProjetoTblMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaProjetoTbl);
 
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Excluir");
 
@@ -194,6 +213,8 @@ public class ProjetoFrm extends javax.swing.JFrame {
 
         estadoProjetoCbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EM ANDAMENTO", "CANCELADO", "CONCLUIDO" }));
 
+        custoProjetoTxtFld.setEnabled(false);
+
         jLabel8.setText("Custo");
 
         AlocacaoBtn.setText("Alocações do Projeto");
@@ -202,6 +223,8 @@ public class ProjetoFrm extends javax.swing.JFrame {
                 AlocacaoBtnActionPerformed(evt);
             }
         });
+
+        idProjetoTxtFld.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -247,10 +270,13 @@ public class ProjetoFrm extends javax.swing.JFrame {
                                     .addComponent(precoFinalProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(descricaoProjetoTxtBox)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(selecionaClienteProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(clienteProjetoTxtFld))
-                                .addComponent(nomeProjetoTxtFld)))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(selecionaClienteProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(idProjetoTxtFld))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nomeProjetoTxtFld)
+                                        .addComponent(clienteProjetoTxtFld)))))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -264,7 +290,8 @@ public class ProjetoFrm extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(nomeProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomeProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idProjetoTxtFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -332,6 +359,33 @@ public class ProjetoFrm extends javax.swing.JFrame {
         new AlocacaoDlg(this, true).setVisible(true);
     }//GEN-LAST:event_AlocacaoBtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(this.checaVazio()){
+            JOptionPane.showMessageDialog(null, "Erro, confira o preenchimento", "ERRO", JOptionPane.WARNING_MESSAGE);
+        }else if(!this.idProjetoTxtFld.getText().toString().equals("")){
+            JOptionPane.showMessageDialog(null, "Alteração ainda não implementada","AVISO", JOptionPane.WARNING_MESSAGE);
+        }else{
+            Projeto projeto = new Projeto();
+            projeto.setNomeProjeto(this.nomeProjetoTxtFld.getText());
+            projeto.setDescricaoProjeto(this.descricaoProjetoTxtArea.getText());
+            projeto.setMargemDeLucroProjeto(Double.parseDouble(this.margemDeLucroProjetoTxtFld.getText()));
+            projeto.setCustoProjeto(0.0);
+            projeto.setPrecoFinalProjeto(0.0);
+            projeto.setEstadoProjeto(this.obterEstado());
+            projeto.setClienteProjeto(clienteProjeto);
+            projeto.setAlocacoesProjeto(new ArrayList<Alocacao>());
+            projetoDAO.salvarProjeto(projeto);
+            this.fieldRefresh();
+            this.preencheTabela();            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void listaProjetoTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProjetoTblMouseClicked
+        // TODO add your handling code here:
+        this.preencheField();
+    }//GEN-LAST:event_listaProjetoTblMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -374,6 +428,7 @@ public class ProjetoFrm extends javax.swing.JFrame {
     private javax.swing.JTextArea descricaoProjetoTxtArea;
     private javax.swing.JScrollPane descricaoProjetoTxtBox;
     private javax.swing.JComboBox<String> estadoProjetoCbox;
+    private javax.swing.JTextField idProjetoTxtFld;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
