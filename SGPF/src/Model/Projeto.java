@@ -6,7 +6,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -23,20 +23,31 @@ public class Projeto implements Serializable {
     @Column(length = 10, name = "IDPROJETO", nullable = false)
     private int idProjeto;
     
+    @Column(length = 100, name = "NOME_PROJETO", nullable = false)
+    private String nomeProjeto;  
     
-    private String nomeProjeto;
-    
+ 
+    @ManyToOne
     private Cliente clienteProjeto;
     
+    @Column(length = 100, name = "DESC_PROJETO", nullable = false)
     private String descricaoProjeto;
     
+    @Column(length = 100, name = "MG_LUCRO", nullable = false)
     private Double margemDeLucroProjeto;
     
+    @Column(length = 100, name = "PRECO", nullable = false)
     private Double precoFinalProjeto;
     
-    private EstadoProjeto estadoProjeto;
+    @Column(length = 100, name = "CUSTO", nullable = false)
+    private Double custoProjeto;
     
-    //private ArrayList<Alocacao> alocacoesProduto;
+    @Column(length = 100, name = "ESTADO", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EstadoProjeto estadoProjeto;
+
+    @OneToMany(mappedBy = "projetoAlocacao")
+    private List<Alocacao> alocacoesProjeto;
     
     //private ArrayList<Alocacao> alocacoesFuncionario;
     
@@ -124,5 +135,21 @@ public class Projeto implements Serializable {
     }
     
     */
+
+    public List<Alocacao> getAlocacoesProjeto() {
+        return alocacoesProjeto;
+    }
+
+    public void setAlocacoesProjeto(List<Alocacao> alocacoesProjeto) {
+        this.alocacoesProjeto = alocacoesProjeto;
+    }
+
+    public Double getCustoProjeto() {
+        return custoProjeto;
+    }
+
+    public void setCustoProjeto(Double custoProjeto) {
+        this.custoProjeto = custoProjeto;
+    }
     
 }

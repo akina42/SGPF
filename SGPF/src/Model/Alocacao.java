@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,14 +19,15 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="PROJETO")
+@Table(name="ALOCACAO")
 public class Alocacao {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(length = 10, name = "IDPROJETO", nullable = false)
+    @Column(length = 10, name = "IDEALOCACAO", nullable = false)
     private int idAlocacao;
     
+    @ManyToOne
     private Projeto projetoAlocacao;
     
     private Double custoTotalAlocacoes;

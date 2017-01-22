@@ -5,38 +5,41 @@
  */
 package View;
 
-import Control.FornecedorDAO;
-import Model.Fornecedor;
+import Control.ClienteDAO;
+import Model.Cliente;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author leo
+ * @author user
  */
-public class FornecedorCompraFrm extends javax.swing.JFrame {
+public class ClienteProjetoDlg extends javax.swing.JDialog {
     
-    FornecedorDAO fornecedorDAO = new FornecedorDAO();
+    ClienteDAO clienteDAO = new ClienteDAO();
 
     /**
-     * Creates new form FornecedorCompraFrm
+     * Creates new form NovoJDialog
      */
-    public FornecedorCompraFrm() {
+    public ClienteProjetoDlg(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        this.preencheTabela();
+        preencheTabela();
     }
+
+
     
     public void preencheTabela(){
 
-    List<Fornecedor> listaFornecedor = fornecedorDAO.obterFornecedor();
-    DefaultTableModel dtm = new DefaultTableModel();
-    this.listaFornecedorcompraTbl.setModel(dtm);
-    dtm.addColumn("Id");
-    dtm.addColumn("Nome");
-    dtm.addColumn("CNPJ");
+        List<Cliente> listCliente = clienteDAO.obterClientes();
+        DefaultTableModel dtm = new DefaultTableModel();
+        this.listaClienteProjeto.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Nome");
+        dtm.addColumn("Cpf");
 
-    for(Fornecedor fr : listaFornecedor){
-            dtm.addRow(new Object[] {fr.getIdPessoa(), fr.getNomeFantasia(),fr.getCpfcnpj()});
+    for(Cliente cl : listCliente){
+            dtm.addRow(new Object[] {cl.getIdPessoa() , cl.getNomeFantasia(), cl.getCpfcnpj(),});
         }
 }
 
@@ -50,12 +53,12 @@ public class FornecedorCompraFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaFornecedorcompraTbl = new javax.swing.JTable();
-        selecionarFornecedorCompraBtn = new javax.swing.JButton();
+        listaClienteProjeto = new javax.swing.JTable();
+        selecionarClienteProjeto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        listaFornecedorcompraTbl.setModel(new javax.swing.table.DefaultTableModel(
+        listaClienteProjeto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -66,12 +69,12 @@ public class FornecedorCompraFrm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(listaFornecedorcompraTbl);
+        jScrollPane1.setViewportView(listaClienteProjeto);
 
-        selecionarFornecedorCompraBtn.setText("Selecionar");
-        selecionarFornecedorCompraBtn.addActionListener(new java.awt.event.ActionListener() {
+        selecionarClienteProjeto.setText("Selecionar");
+        selecionarClienteProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selecionarFornecedorCompraBtnActionPerformed(evt);
+                selecionarClienteProjetoActionPerformed(evt);
             }
         });
 
@@ -79,29 +82,29 @@ public class FornecedorCompraFrm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(selecionarFornecedorCompraBtn)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(selecionarClienteProjeto))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(selecionarFornecedorCompraBtn)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selecionarClienteProjeto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void selecionarFornecedorCompraBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionarFornecedorCompraBtnActionPerformed
+    private void selecionarClienteProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionarClienteProjetoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_selecionarFornecedorCompraBtnActionPerformed
+        ProjetoFrm.clienteProjeto = clienteDAO.recuperaCliente((int) this.listaClienteProjeto.getValueAt(this.listaClienteProjeto.getSelectedRow(), 0));        
+        this.dispose();
+    }//GEN-LAST:event_selecionarClienteProjetoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,28 +123,35 @@ public class FornecedorCompraFrm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FornecedorCompraFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteProjetoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FornecedorCompraFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteProjetoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FornecedorCompraFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteProjetoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FornecedorCompraFrm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteProjetoDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FornecedorCompraFrm().setVisible(true);
+                ClienteProjetoDlg dialog = new ClienteProjetoDlg(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable listaFornecedorcompraTbl;
-    private javax.swing.JButton selecionarFornecedorCompraBtn;
+    private javax.swing.JTable listaClienteProjeto;
+    private javax.swing.JButton selecionarClienteProjeto;
     // End of variables declaration//GEN-END:variables
 }
