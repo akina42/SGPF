@@ -22,6 +22,7 @@ public class CalculadoraAlocacaoTeste {
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("\nTestes unitários da classe CalculadoraAlocacao\nDesenvolvedor: Akina Kurita\nExecutor dos Testes: Akina Kurita\n");
         System.out.println("--------------------------------------------------------------------------");
+        
     }
     
     @AfterClass
@@ -29,6 +30,7 @@ public class CalculadoraAlocacaoTeste {
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("\nTérmino dos testes unitários da classe CalculadoraAlocacao.\n");
         System.out.println("--------------------------------------------------------------------------");
+        
     }
     
     @Before
